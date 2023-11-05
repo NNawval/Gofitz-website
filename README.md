@@ -45,7 +45,7 @@ This is an example of how to list things you need to use the software and how to
 _Below is an example of how you can instruct your audience on installing and setting up your app._
 1. Clone the repo
    ```sh
-   git clone https://github.com/your_username_/Project-Name.git
+   git clone https://gitlab.informatika.org/k01_g04/if3152-2023-k01-04-gofitz.git
    ```
 2. Change directory to the main folder
     ```sh
