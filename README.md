@@ -49,7 +49,7 @@ _Below is an example of how you can instruct your audience on installing and set
    ```
 2. Change directory to the main folder
     ```sh
-   cd gofitz
+   cd if3152-2023-k01-04-gofitz
    ```
 3. Install NPM packages
    ```sh
