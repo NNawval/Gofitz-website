@@ -62,7 +62,7 @@ _Below is an example of how you can instruct your audience on installing and set
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-### Use Case
+## Use Case
 _Below is the list of implemented use cases including PIC and screenshot._
 1. UC01 Melihat data lapangan dan ketersediaannya (18221111 Pramaditya Fajri Migfar)
 2. UC02 Reservasi online (18221087 Willy Frans Farel Sijabat)
@@ -76,5 +76,5 @@ _Below is the list of implemented use cases including PIC and screenshot._
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-### Database
+## Database
 _Below is the list of implemented database._
