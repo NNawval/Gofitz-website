@@ -57,9 +57,8 @@ _Below is an example of how you can instruct your audience on installing and set
    ```
 4. Run to local server
    ```sh
-   npm run dev
+   npm start
    ```
-4. Direct to your local
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
