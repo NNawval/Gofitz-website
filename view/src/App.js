@@ -1,10 +1,11 @@
 import React from 'react';
 import './App.css';
+import Ketersediaan from "./pages/Ketersediaan";
 
 function App() {
   return (
     <div className="App">
-      <h1>Halo ngab</h1>
+      <Ketersediaan />
     </div>
   );
 }
