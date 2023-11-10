@@ -2,6 +2,7 @@ import React from "react";
 
 function KonfirmasiReservasi() {
     return (
+        <>
             <div className="container sticky-top pt-4 d-none d-lg-block">
                 <div className="card shadow">
                     <div className="card-body m-2">
@@ -41,11 +42,17 @@ function KonfirmasiReservasi() {
                         </div>
                     </div>
                 </div>
-            {/* <div className="container-fluid fixed-bottom ">
-                <hr />
-
-            </div> */}
-        </div>
+            </div>
+            <div className="container-fluid d-flex d-lg-none px-4 py-2 justify-content-between align-items-center fixed-bottom border-top bg-white">
+                <div className="text-start">
+                    <strong>Rp100,000<small className="fs-6 text-body-secondary fw-light"> / 2 jam</small></strong>
+                    <p className="m-0"><u>12/12/2023</u> : <u>08.00-09.00</u></p>
+                </div>
+                <button className="btn btn-success rounded w-25 align-self-center my-3 p-2" type="button">
+                    Pesan
+                </button>
+            </div>
+        </>
     );
 }
 
