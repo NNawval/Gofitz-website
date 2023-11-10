@@ -43,9 +43,10 @@ function KonfirmasiReservasi() {
                     </div>
                 </div>
             </div>
-            <div className="container-fluid fixed-bottom">
-                
-            </div>
+            {/* <div className="container-fluid fixed-bottom ">
+                <hr />
+
+            </div> */}
         </div>
     );
 }
