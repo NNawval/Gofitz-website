@@ -24,7 +24,7 @@ function Ketersediaan() {
             <PilihLapangan lapangan={lapangan[2]} />
           </div>
           <div className="col-4">
-            <KonfirmasiReservasi tanggal="19/12/2021" mulai="08.00" selesai="09.00" lapangan="1" />
+            <KonfirmasiReservasi tanggal="19/12/2021" mulai="08.00" selesai="09.00" lapangan={lapangan} />
           </div>
         </div>
       </div>
