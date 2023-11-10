@@ -2,7 +2,6 @@ import React from "react";
 
 function KonfirmasiReservasi() {
     return (
-        <div>
             <div className="container sticky-top pt-4 d-none d-lg-block">
                 <div className="card shadow">
                     <div className="card-body m-2">
@@ -42,7 +41,6 @@ function KonfirmasiReservasi() {
                         </div>
                     </div>
                 </div>
-            </div>
             {/* <div className="container-fluid fixed-bottom ">
                 <hr />
 

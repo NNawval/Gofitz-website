@@ -25,7 +25,7 @@ function Register() {
                 <input type="password" className="form-control rounded-3" id="floatingPasswordConfirmation" placeholder="Confirm Password" />
                 <label htmlFor="floatingPassword">Confirm Password</label>
               </div>
-              <button className="w-100 mb-2 btn btn-lg rounded-3 btn-dark" type="submit">Sign-up</button>
+              <button className="w-100 mb-2 btn btn-lg rounded-3 btn-success" type="submit">Sign-up</button>
               <small className="text-body-secondary">By clicking Sign up, you agree to the terms of use.</small>
             </form>
           </div>
