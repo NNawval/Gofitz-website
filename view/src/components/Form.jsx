@@ -48,7 +48,7 @@ function Form(prompt){
             );
     }
     return(
-        <div className="container-fluid px-4 mt-4 mx-0 text-start">
+        <div className="container-fluid px-5 mt-4 mx-0 text-start">
             <hr className="d-none d-lg-block" />
             <h4 className="mb-3">Pesananmu</h4>
             <div className="d-flex justify-content-between">

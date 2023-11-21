@@ -14,7 +14,7 @@ export default function DetailPesanan(prompt) {
     return (
         <>
             <div className="container-fluid container-lg sticky-top pt-4">
-                <div className="border p-3" style={{borderRadius:"15px"}}>
+                <div className="border p-4" style={{borderRadius:"15px"}}>
                     <div className="d-flex gap-2">
                         <img src={lapanganPoliuretan} alt="lapangan" style={{width:"120px", height:"100px", objectFit:"cover", border:"1px solid transparent", borderRadius:"10px"}} />
                         <div className="d-flex flex-column text-start justify-content-between">

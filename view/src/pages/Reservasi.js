@@ -16,7 +16,7 @@ function Reservasi(props) {
         <div className="container-fluid container-lg mt-3 p-0 mb-5">
             <div className="d-flex align-items-center gap-3 justify-content-between justify-content-lg-start">
                 <button style={{width: "40px", height:"40px", background:"transparent", border:"none"}}><FontAwesomeIcon className="icon-size" icon={faChevronLeft} /></button>
-                <h3 className="text-lg-start m-0">Ketersediaan</h3>
+                <h3 className="text-lg-start m-0">Pilih Waktu</h3>
                 <button className="invisible" style={{width: "40px", height:"40px", background:"transparent", border:"none"}}><FontAwesomeIcon className="icon-size" icon={faChevronLeft} /></button>
             </div>
             <div className="row justify-content-between mx-0 mx-lg-5">
