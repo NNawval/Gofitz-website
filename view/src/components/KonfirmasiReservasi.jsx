@@ -25,7 +25,7 @@ function toTime(time) {
 function KonfirmasiReservasi(props) {
     const [reservasi, setReservasi] = React.useState("Pilih lapangan");
     const [harga, setHarga] = React.useState(" -");
-    const [jam, setJam] = React.useState("-");
+    const [jam, setJam] = React.useState(1);
     const [hargaTotal, setHargaTotal] = React.useState("-");
     const [style, setStyle] = React.useState("mt-3 d-none");
     const [time, setTime] = React.useState({"mulai" : 7, "selesai" : 8});
@@ -36,6 +36,8 @@ function KonfirmasiReservasi(props) {
                 setTime({"mulai": time.mulai + 1, "selesai": time.selesai + 1});
             } else {
                 setTime({"mulai": time.mulai + 1, "selesai": time.selesai});
+                setJam(time.selesai - time.mulai - 1);
+                setHargaTotal(harga * (time.selesai - time.mulai - 1));
             }
         }
     }
@@ -43,12 +45,16 @@ function KonfirmasiReservasi(props) {
     function incrementEnd() {
         if (time.selesai < 21 && (time.selesai - time.mulai) < 6) {
             setTime({"mulai": time.mulai, "selesai": time.selesai + 1});
+            setJam(time.selesai - time.mulai + 1);
+            setHargaTotal(harga * (time.selesai - time.mulai + 1));
         }
     }
 
     function decrementStart() {
         if (time.mulai > 7 && (time.selesai - time.mulai) < 6) {
             setTime({"mulai": time.mulai - 1, "selesai": time.selesai});
+            setJam(time.selesai - time.mulai + 1);
+            setHargaTotal(harga * (time.selesai - time.mulai + 1));
         }
     }
 
@@ -58,20 +64,20 @@ function KonfirmasiReservasi(props) {
                 setTime({"mulai": time.mulai - 1, "selesai": time.selesai - 1});
             } else {
                 setTime({"mulai": time.mulai, "selesai": time.selesai - 1});
+                setJam(time.selesai - time.mulai - 1);
+                setHargaTotal(harga * (time.selesai - time.mulai - 1));
             }
         }
     }
 
-
     function gantiLapangan(event) {
-        setJam(1);
         setReservasi(event.target.innerText);
         if ((props.pilihTanggal.getDay() === 0) || (props.pilihTanggal.getDay() === 6)) {
             setHarga(lapangan[parseInt(event.target.innerText.split(" ")[1])-1].harga.weekend);
-            setHargaTotal(lapangan[parseInt(event.target.innerText.split(" ")[1])-1].harga.weekend);
+            setHargaTotal(lapangan[parseInt(event.target.innerText.split(" ")[1])-1].harga.weekend * (time.selesai-time.mulai));
         } else {
             setHarga(lapangan[parseInt(event.target.innerText.split(" ")[1])-1].harga.weekday);
-            setHargaTotal(lapangan[parseInt(event.target.innerText.split(" ")[1])-1].harga.weekday);
+            setHargaTotal(lapangan[parseInt(event.target.innerText.split(" ")[1])-1].harga.weekday * (time.selesai-time.mulai));
         }
         setStyle("mt-3 d-block");
     }
@@ -106,8 +112,8 @@ function KonfirmasiReservasi(props) {
                                         <p className="m-0">{toTime(time.mulai)} : 00</p>
                                     </div>
                                     <div className="row">
-                                        <button onClick={incrementStart} className="col-12 p-0 me-2 remove-button"><FontAwesomeIcon className="icon-size" icon={faChevronUp} /></button>
-                                        <button onClick={decrementStart} className="col-12 p-0 me-2 remove-button"><FontAwesomeIcon className="icon-size" icon={faChevronDown} /></button>
+                                        <button onClick={incrementStart} className="p-0 me-2 remove-button"><FontAwesomeIcon className="icon-size" icon={faChevronUp} /></button>
+                                        <button onClick={decrementStart} className="p-0 me-2 remove-button"><FontAwesomeIcon className="icon-size" icon={faChevronDown} /></button>
                                     </div>
                                     
                                 </div>

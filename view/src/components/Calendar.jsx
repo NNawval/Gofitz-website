@@ -7,7 +7,7 @@ function daysInMonth(month, year) {
 }
 
 function setTanggal(tanggal, bulan) {
-    const tahun = new Date().getFullYear();
+    const tahun = new Date(new Date().getTime() + 24 * 60 * 60 * 1000).getFullYear();
     const jmlhHari = daysInMonth((bulan + 1), tahun);
     const hari = new Date(tahun, bulan, 1).getDay();
     for (let i = 0; i < hari; i++) {
@@ -24,7 +24,7 @@ function setTanggal(tanggal, bulan) {
 }
 
 function setTanggal2(tanggal, bulan) {
-    const tahun = new Date().getFullYear();
+    const tahun = new Date(new Date().getTime() + 24 * 60 * 60 * 1000).getFullYear();
     const jmlhHari = daysInMonth((bulan + 1), tahun);
     const hari = new Date(tahun, bulan, 1).getDay();
     for (let i = 0; i < hari; i++) {
@@ -43,15 +43,15 @@ function setTanggal2(tanggal, bulan) {
 function Calendar(props) {
     const tanggal1 = [];
     const tanggal2 = [];
-    setTanggal(tanggal1, new Date().getMonth());
-    setTanggal2(tanggal2, (new Date().getMonth() + 1))
-    //new Date(new Date().getFullYear(), (new Date().getMonth() + 1)).getFullYear()
+    setTanggal(tanggal1, new Date(new Date().getTime() + 24 * 60 * 60 * 1000).getMonth());
+    setTanggal2(tanggal2, (new Date(new Date().getTime() + 24 * 60 * 60 * 1000).getMonth() + 1))
+
     return (
         <div className="container">
             <h3 className="text-start mb-4">Pilih tanggal reservasi</h3>
             <div className="row justify-content-center gap-4">
-                <CalendarSatuan month={new Date().getMonth()} year={new Date().getFullYear()} tanggal={tanggal1} ubahTanggal={props.ubahTanggal} />
-                <CalendarSatuan month={new Date(new Date().getFullYear(), (new Date().getMonth() + 1)).getMonth()} year={new Date(new Date().getFullYear(), (new Date().getMonth() + 1)).getFullYear()} tanggal={tanggal2} ubahTanggal={props.ubahTanggal} />
+                <CalendarSatuan month={new Date(new Date().getTime() + 24 * 60 * 60 * 1000).getMonth()} year={new Date(new Date().getTime() + 24 * 60 * 60 * 1000).getFullYear()} tanggal={tanggal1} ubahTanggal={props.ubahTanggal} />
+                <CalendarSatuan month={new Date(new Date(new Date().getTime() + 24 * 60 * 60 * 1000).getFullYear(), (new Date(new Date().getTime() + 24 * 60 * 60 * 1000).getMonth() + 1)).getMonth()} year={new Date(new Date(new Date().getTime() + 24 * 60 * 60 * 1000).getFullYear(), (new Date(new Date().getTime() + 24 * 60 * 60 * 1000).getMonth() + 1)).getFullYear()} tanggal={tanggal2} ubahTanggal={props.ubahTanggal} />
             </div>
         </div>
     );

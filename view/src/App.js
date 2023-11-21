@@ -1,13 +1,13 @@
 import React from 'react';
 import './App.css';
-import Ketersediaan from './pages/Ketersediaan';
-// import Calendar from './components/Calendar';
+// import Ketersediaan from './pages/Ketersediaan';
+import Reservasi from './pages/Reservasi';
 
 function App() {
   return (
     <div className="App">
-      {/* <Calendar /> */}
-      <Ketersediaan />
+      {/* <Ketersediaan /> */}
+      <Reservasi />
     </div>
   );
 }

@@ -14,6 +14,7 @@
 
 .mouse-click {
     background-color: #198754;
+    color: white;
 }
 
 .tgl-disabled {
@@ -29,7 +30,6 @@
         height: 58px;
         margin: 1px;
         font-size: 0.9rem;
-        background-color: transparent;
     }
 }
 
@@ -40,7 +40,6 @@
         height: 43px;
         margin: 1px;
         font-size: 0.9rem;
-        background-color: transparent;
     }
 }
 
@@ -51,6 +50,5 @@
         height: 28px;
         margin: 1px;
         font-size: 0.9rem;
-        background-color: transparent;
     }
 }
