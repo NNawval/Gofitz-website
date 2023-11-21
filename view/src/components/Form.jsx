@@ -62,11 +62,11 @@ function Form(prompt){
             <hr/>
             <h4 className="mb-3">Masukkan data diri</h4>
             <form>
-                <div className="form-floating" >
+                <div className="form-floating mb-3" >
                     <input type="text" className="form-control rounded-3" id="nama" placeholder="Nama" />
                     <label htmlFor="nama" >Nama</label>
                 </div>
-                <div className="form-floating">
+                <div className="form-floating mb-3">
                     <input type="text" className="form-control rounded-3" id="nomor-telepon" placeholder="Nomor telepon" />
                     <label htmlFor="nomor-telepon">Nomor telepon</label>
                 </div>
