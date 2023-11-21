@@ -19,7 +19,7 @@ export default function DetailPesanan(prompt) {
                         <img src={lapanganPoliuretan} alt="lapangan" style={{width:"120px", height:"100px", objectFit:"cover", border:"1px solid transparent", borderRadius:"10px"}} />
                         <div className="d-flex flex-column text-start justify-content-between">
                             <div>
-                                <p className="m-0">Lapangan 1</p>
+                                <span className="badge bg-success">Lapangan 1</span>
                                 <p className="m-0">Lantai Atletik Poliuretan</p>
                             </div>
                             <p className="m-0">3 bola</p>
