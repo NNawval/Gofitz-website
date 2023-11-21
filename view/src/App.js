@@ -1,11 +1,11 @@
 import React from 'react';
 import './App.css';
-import Reservasi from './pages/Reservasi'
+import ReservasiOngoing from './pages/ReservasiOngoing';
 
 function App() {
   return (
     <div className="App">
-      <Reservasi online={true} lapangan={"lapangan-rumput"}/>
+      <ReservasiOngoing/>
     </div>
   );
 }
