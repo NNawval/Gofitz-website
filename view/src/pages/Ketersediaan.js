@@ -20,6 +20,7 @@ function Ketersediaan() {
       <div className="container w-75">
         <div className="row">
           <div className="col-lg-8 col-12 d-flex flex-column gap-4 mt-4">
+            <h3 className="text-start m-0">Pilih tanggal reservasi</h3>
             <Calendar ubahTanggal={setTanggal} />
             <hr className="m-0" />
             <h3 className="text-start m-0">Cek ketersediaan lapangan</h3>
