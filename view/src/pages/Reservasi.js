@@ -5,7 +5,10 @@ import Footer from "../components/Footer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 
+
+
 function Reservasi(props) {
+
   return (
     <>
         <header className="d-lg-block d-none py-3 border-bottom text-start">

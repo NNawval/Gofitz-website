@@ -6,17 +6,15 @@ async function getImageLapangan(lapangan){
         let data = await database.imageLapangan(lapangan);
         return data.publicUrl;
     }
-const foto = getImageLapangan("poliuretan");
-console.log(foto);
-
-export default function DetailPesanan(props) {
+console.log(getImageLapangan("poliuretan"));
+export default async function DetailPesanan(props) {
     
     return (
         <>
             <div className="container-fluid container-lg sticky-top pt-4">
                 <div className="border p-4" style={{borderRadius:"15px"}}>
                     <div className="d-flex gap-2">
-                        <img src={foto} alt="lapangan" style={{width:"120px", height:"100px", objectFit:"cover", border:"1px solid transparent", borderRadius:"10px"}} />
+                        <img src={await getImageLapangan("poliuretan")} alt="lapangan" style={{width:"120px", height:"100px", objectFit:"cover", border:"1px solid transparent", borderRadius:"10px"}} />
                         <div className="d-flex flex-column text-start justify-content-between">
                             <div>
                                 <span className="badge bg-success">Lapangan 1</span>
