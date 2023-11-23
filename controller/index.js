@@ -23,27 +23,28 @@ app.get("/",async function(req,res){
     // }
     // console.log(input);
     // let data = await database.getKetersediaan(input);
-    console.log(typeof date);
-    console.log(date.year);
-    let a = toString(date).split("+");
-    console.log(typeof a);
-    let c = toString(dateTomorrow).split("+");
-    console.log(a);
-    console.log(c);
-    let b = a[0];
-    let d = c[0] + ("T00:00:00+00:00");
-    console.log(b);
-    console.log(d);
-    b = new Date(b);
-    d = new Date(d);
-    console.log(b);
-    console.log(d);
-    let input = {
-        "date": b,
-        "dateTomorrow": d,
-        "idLapangan":1
-    }
-    let data = await database.getKetersediaan(input);
+    // console.log(typeof date);
+    // console.log(date.year);
+    // let a = toString(date).split("+");
+    // console.log(typeof a);
+    // let c = toString(dateTomorrow).split("+");
+    // console.log(a);
+    // console.log(c);
+    // let b = a[0];
+    // let d = c[0] + ("T00:00:00+00:00");
+    // console.log(b);
+    // console.log(d);
+    // b = new Date(b);
+    // d = new Date(d);
+    // console.log(b);
+    // console.log(d);
+    // let input = {
+    //     "date": b,
+    //     "dateTomorrow": d,
+    //     "idLapangan":1
+    // }
+    // let data = await database.getKetersediaan(input);
+    let data = await database.imageLapangan("poliuretan");
     console.log(data);
     res.send(data)
 });

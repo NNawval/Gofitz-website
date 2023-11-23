@@ -115,6 +115,19 @@ async function getKetersediaan(prompt){
     }
 }
 
+async function imageLapangan(props){
+    const {data, error} = await supabase
+    .storage
+    .from('Lapangan gambar')
+    .getPublicUrl(`lapangan-${props}.jpg`)
+    if(error){
+        console.log("gagal");
+    }
+    else{
+        return data;
+    }
+}
+
 async function tes(){
     const { data , error } = await supabase
     .from("reservasi")
@@ -129,5 +142,6 @@ module.exports = {
     untungOwner,
     getDataLapangan,
     getKetersediaan,
-    tes
+    tes,
+    imageLapangan
 };
