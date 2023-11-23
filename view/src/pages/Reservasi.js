@@ -1,6 +1,6 @@
 import React from "react";
 import DetailPesanan from "../components/DetailPesanan";
-import Form from "../components/Form";
+import Form from "../components/FormReservasi";
 
 function Reservasi(prompt) {
   return (

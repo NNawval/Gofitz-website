@@ -1,11 +1,11 @@
 import React from 'react';
 import './App.css';
-import ReservasiOngoing from './pages/ReservasiOngoing';
+import Ketersediaan from './pages/Ketersediaan';
 
 function App() {
   return (
     <div className="App">
-      <ReservasiOngoing/>
+      <Ketersediaan/>
     </div>
   );
 }
