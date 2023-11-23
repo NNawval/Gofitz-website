@@ -14,6 +14,9 @@ function App() {
         <Route path="addLapangan" element={<AddLapangan/>}/>
         <Route path="ListLapangan" element={<ListLapangan/>}/>
         <Route path="DashboardOwner" element={<DashboardOwner/>}/>
+        <Route path="DashboardOwner" element={<DashboardOwner/>}/>
+        <Route path="DashboardOwner" element={<DashboardOwner/>}/>
+        <Route path="DashboardOwner" element={<DashboardOwner/>}/>
       </Routes>
     </BrowserRouter>
   );
