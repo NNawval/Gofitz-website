@@ -14,7 +14,7 @@ function ReservasiOngoing(){
     //     // // data.map((el) => <ListReservasi reservasi = {el} />);
     // }       
     return(
-        <div className="container w-50">
+        <div className="container">
             <div className="row">
                 <ListReservasi />
             </div>

@@ -14,14 +14,25 @@ function ListReservasi(props){
                 </div>
                 <div class="card-body">
                     <div className="d-flex gap-3">
-                        <img src={lapanganPoliuretan} alt="lapangan" className="" style={{width:"150px", height:"150px", objectFit:"cover"}} /> 
-                        <div className="d-flex w-100 flex-column justify-content-between">
-                            <div>
-                                <h5>Lapangan Poliuretan</h5>
-                                <p>Pramaditya Fajri Migfar</p>
-                                <p>Total: Rp200.000</p>
-                            </div>
-                            <button className="btn btn-outline-success w-25 align-self-end">Ubah</button>
+                        <img src={lapanganPoliuretan} alt="lapangan" className="" style={{width:"150px", height:"160px", borderRadius:"10px", objectFit:"cover"}} /> 
+                        <div className="d-flex w-100 flex-column justify-content-between" >
+                            <div className="d-flex flex-column justify-content-between">
+                                <div className="row">
+                                    <h5>Lapangan Poliuretan</h5>
+                                    <div className="col-8">
+                                        <p className="m-0">Pramaditya Fajri Migfar</p>
+                                        <p className="m-0">pfajrimigfar@gmail.com</p>
+                                        <p className="m-0">081213087650</p>
+                                    </div>
+                                    <div className="col-4 border-start">
+                                        <p className="m-0">Total</p>
+                                        <p className="m-0"><b>Rp200.000</b></p>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <button className="btn btn-outline-success w-25 align-self-end col-4 offset-8 mt-3">Ubah</button>
+                                </div>
+                            </div>                            
                         </div>
                     </div>
                 </div>
