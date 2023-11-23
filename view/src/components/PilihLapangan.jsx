@@ -5,7 +5,7 @@ import PilihWaktu from "./PilihWaktu";
 
 function PilihLapangan(props) {
     // ini udh id lapangan yg sama tanggal yg sama
-    const reservasi = [{"codeBooking": "x", "bookingStart": new Date('March 13, 08 07:20'), "bookingEnd": new Date('March 13, 08 10:20'), "idLapangan": "x"}];
+    const reservasi = [{"codeBooking": "x", "bookingStart": new Date('March 13, 08 07:00'), "bookingEnd": new Date('March 13, 08 08:00'), "idLapangan": "x"}];
 
     return (
         <div className="container-fluid p-0">

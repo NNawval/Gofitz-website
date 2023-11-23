@@ -14,8 +14,10 @@ function ReservasiOngoing(){
     //     // // data.map((el) => <ListReservasi reservasi = {el} />);
     // }       
     return(
-        <div>
-            <ListReservasi />
+        <div className="container">
+            <div className="row">
+                <ListReservasi />
+            </div>
         </div>
     );
 }
