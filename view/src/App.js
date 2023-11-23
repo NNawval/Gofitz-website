@@ -1,14 +1,21 @@
 import React from 'react';
 import './App.css';
+import {BrowserRouter, Routes, Route} from "react-router-dom";
 import Ketersediaan from './pages/Ketersediaan';
-// import Calendar from './components/Calendar';
-
+import DashboardOwner from './pages/DashboardOwner';
+import AddLapangan from './components/AddLapangan';
+import Calendar from './components/Calendar';
+import ListLapangan from './components/ListLapangan'
 function App() {
   return (
-    <div className="App">
-      {/* <Calendar /> */}
-      <Ketersediaan />
-    </div>
+    <BrowserRouter>
+      <Routes>
+
+        <Route path="addLapangan" element={<AddLapangan/>}/>
+        <Route path="ListLapangan" element={<ListLapangan/>}/>
+        <Route path="DashboardOwner" element={<DashboardOwner/>}/>
+      </Routes>
+    </BrowserRouter>
   );
 }
 

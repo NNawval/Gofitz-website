@@ -33,6 +33,7 @@ function DeskripsiLapangan(props) {
                         </div>
                         <p className="card-text mb-auto">{<FontAwesomeIcon icon={faMoneyBillWave} />}<b> Weekday: {"Rp" + toRupiah(props.harga.weekday)}</b><small className="text-body-secondary fw-light"> / jam</small></p>
                         <p className="card-text mb-auto">{<FontAwesomeIcon icon={faMoneyBillWave} />}<b> Weekend: {"Rp" + toRupiah(props.harga.weekend)}</b><small className="text-body-secondary fw-light"> / jam</small></p>
+
                     </div>
                 </div>
             </div>
