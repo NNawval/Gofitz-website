@@ -1,6 +1,44 @@
-import React from "react";
+import React, { useState } from "react";
+import { supabase } from './client';
 
 function Login() {
+
+  const [formData,setFormData] = useState({
+    email:"",password:"",
+  })
+
+  console.log(formData)
+
+  function handleChange(event){
+    if (event.target.id === "floatingEmail") {
+      setFormData({email:event.target.value, password: formData.password})
+    } else {
+      setFormData({email:formData.email, password: event.target.value})
+    }
+
+  }
+
+  function handleLogout(){
+    
+  }
+
+  async function handleSubmit(e){
+    e.preventDefault()
+
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: formData.email,
+        password: formData.password,
+      })
+      if (error) throw error
+      console.log(data)
+      alert('Login Berhasil')
+
+    } catch (error) {
+      alert(error)
+    }
+  }
+
   return (
     <div className="modal fade" tabIndex="-1" role="dialog" id="modalLogin">
       <div className="modal-dialog" role="document">
@@ -11,17 +49,16 @@ function Login() {
           </div>
 
           <div className="modal-body p-5 pt-0">
-            <form className="">
+            <form className="" onSubmit={handleSubmit}>
               <div className="form-floating mb-3">
-                <input type="email" className="form-control rounded-3" id="floatingInput" placeholder="name@example.com" />
-                <label htmlName="floatingInput">Email address</label>
+                <input type="email" className="form-control rounded-3" id="floatingEmail" placeholder="name@example.com" value={formData.email} onChange={handleChange}/>
+                <label htmlName="floatingEmail">Email address</label>
               </div>
               <div className="form-floating mb-3">
-                <input type="password" className="form-control rounded-3" id="floatingPassword" placeholder="Password" />
+                <input type="password" className="form-control rounded-3" id="floatingPassword" placeholder="Password" value={formData.password} onChange={handleChange}/>
                 <label htmlFor="floatingPassword">Password</label>
               </div>
               <button className="w-100 mb-2 btn btn-lg rounded-3 btn-success" type="submit">Log-in</button>
-              <small className="text-body-secondary">By clicking Sign up, you agree to the terms of use.</small>
             </form>
           </div>
         </div>
