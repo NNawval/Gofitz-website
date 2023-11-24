@@ -135,6 +135,18 @@ async function tes(){
     .eq("id",4)
     return data;
 }
+async function getAllLapangan(){
+    try {
+        const {data,error} = await supabase
+        .from("lapangan")
+        .select()
+        .order("id", {ascending: true});
+        return data;
+    } catch (error) {
+        console.log("gagal");
+    }
+}
+
 module.exports = {
     supabase,
     getReservasi,
@@ -143,5 +155,6 @@ module.exports = {
     getDataLapangan,
     getKetersediaan,
     tes,
-    imageLapangan
+    imageLapangan,
+    getAllLapangan
 };

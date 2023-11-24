@@ -25,7 +25,7 @@ function PilihWaktu(props) {
     [17, false], [18, false], [19, false], [20, false]];
     isReserved(props.listReservasi, ketersediaan);
     return (
-        <div className="row m-0 collapse" id={"deskripsi-" + props.lapangan.id}>
+        <div className="row m-0 collapse" id={"deskripsi-" + props.lapangan}>
             <div className = "col-xl-8 col-12 offset-xl-4 border rounded overflow-hidden shadow-sm py-3">
                 <div className="container text-center">
                     <div className="row g-3">

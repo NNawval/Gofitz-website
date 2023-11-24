@@ -30,6 +30,16 @@ function Tanggal(props) {
 
     function gantiTanggal(event) {
         props.ubahTanggal(new Date(props.year, props.month, event.target.innerText));
+        if (props.reservasi !== "Pilih lapangan") {
+            if (((new Date(props.year, props.month, event.target.innerText)).getDay() === 0) || ((new Date(props.year, props.month, event.target.innerText)).getDay() === 6)) {
+                props.ubahHarga(props.lapangan[parseInt((props.reservasi).split(" ")[1])-1].priceLapanganWeekend);
+                props.ubahHargaTotal(props.lapangan[parseInt((props.reservasi).split(" ")[1])-1].priceLapanganWeekend * (props.jam));
+            } else {
+                props.ubahHarga(props.lapangan[parseInt((props.reservasi).split(" ")[1])-1].priceLapanganWeekday);
+                props.ubahHargaTotal(props.lapangan[parseInt((props.reservasi).split(" ")[1])-1].priceLapanganWeekday * (props.jam));
+            }
+        }
+        
         let button = document.getElementsByClassName("enabled");
         for (let i = 0; i < button.length; i++) {
             button[i].classList.remove("mouse-click");

@@ -4,11 +4,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown ,faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import DropdownItem from "./DropdownItem";
 
-// database
-const lapangan=[{"id": "1", "harga":{"weekday": 200000, "weekend": 250000}},
-{"id": "2", "harga":{"weekday": 150000, "weekend": 175000}},
-{"id": "3","harga":{"weekday": 100000, "weekend": 125000}}];
-
 function toRupiah(num) {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
@@ -23,10 +18,6 @@ function toTime(time) {
 }
 
 function KonfirmasiReservasi(props) {
-    const [reservasi, setReservasi] = React.useState("Pilih lapangan");
-    const [harga, setHarga] = React.useState(" -");
-    const [jam, setJam] = React.useState(1);
-    const [hargaTotal, setHargaTotal] = React.useState("-");
     const [style, setStyle] = React.useState("mt-3 d-none");
     const [time, setTime] = React.useState({"mulai" : 7, "selesai" : 8});
 
@@ -36,8 +27,8 @@ function KonfirmasiReservasi(props) {
                 setTime({"mulai": time.mulai + 1, "selesai": time.selesai + 1});
             } else {
                 setTime({"mulai": time.mulai + 1, "selesai": time.selesai});
-                setJam(time.selesai - time.mulai - 1);
-                setHargaTotal(harga * (time.selesai - time.mulai - 1));
+                props.ubahJam(time.selesai - time.mulai - 1);
+                props.ubahHargaTotal(props.harga * (time.selesai - time.mulai - 1));
             }
         }
     }
@@ -45,16 +36,16 @@ function KonfirmasiReservasi(props) {
     function incrementEnd() {
         if (time.selesai < 21 && (time.selesai - time.mulai) < 6) {
             setTime({"mulai": time.mulai, "selesai": time.selesai + 1});
-            setJam(time.selesai - time.mulai + 1);
-            setHargaTotal(harga * (time.selesai - time.mulai + 1));
+            props.ubahJam(time.selesai - time.mulai + 1);
+            props.ubahHargaTotal(props.harga * (time.selesai - time.mulai + 1));
         }
     }
 
     function decrementStart() {
         if (time.mulai > 7 && (time.selesai - time.mulai) < 6) {
             setTime({"mulai": time.mulai - 1, "selesai": time.selesai});
-            setJam(time.selesai - time.mulai + 1);
-            setHargaTotal(harga * (time.selesai - time.mulai + 1));
+            props.ubahJam(time.selesai - time.mulai + 1);
+            props.ubahHargaTotal(props.harga * (time.selesai - time.mulai + 1));
         }
     }
 
@@ -64,20 +55,20 @@ function KonfirmasiReservasi(props) {
                 setTime({"mulai": time.mulai - 1, "selesai": time.selesai - 1});
             } else {
                 setTime({"mulai": time.mulai, "selesai": time.selesai - 1});
-                setJam(time.selesai - time.mulai - 1);
-                setHargaTotal(harga * (time.selesai - time.mulai - 1));
+                props.ubahJam(time.selesai - time.mulai - 1);
+                props.ubahHargaTotal(props.harga * (time.selesai - time.mulai - 1));
             }
         }
     }
 
     function gantiLapangan(event) {
-        setReservasi(event.target.innerText);
+        props.ubahReservasi(event.target.innerText);
         if ((props.pilihTanggal.getDay() === 0) || (props.pilihTanggal.getDay() === 6)) {
-            setHarga(lapangan[parseInt(event.target.innerText.split(" ")[1])-1].harga.weekend);
-            setHargaTotal(lapangan[parseInt(event.target.innerText.split(" ")[1])-1].harga.weekend * (time.selesai-time.mulai));
+            props.ubahHarga(props.lapangan[parseInt(event.target.innerText.split(" ")[1])-1].priceLapanganWeekend);
+            props.ubahHargaTotal(props.lapangan[parseInt(event.target.innerText.split(" ")[1])-1].priceLapanganWeekend * (time.selesai-time.mulai));
         } else {
-            setHarga(lapangan[parseInt(event.target.innerText.split(" ")[1])-1].harga.weekday);
-            setHargaTotal(lapangan[parseInt(event.target.innerText.split(" ")[1])-1].harga.weekday * (time.selesai-time.mulai));
+            props.ubahHarga(props.lapangan[parseInt(event.target.innerText.split(" ")[1])-1].priceLapanganWeekday);
+            props.ubahHargaTotal(props.lapangan[parseInt(event.target.innerText.split(" ")[1])-1].priceLapanganWeekday * (time.selesai-time.mulai));
         }
         setStyle("mt-3 d-block");
     }
@@ -87,7 +78,7 @@ function KonfirmasiReservasi(props) {
             <div className="container sticky-top pt-4 d-none d-lg-block">
                 <div className="card shadow">
                     <div className="card-body m-2">
-                        <h1 className="card-title pricing-card-title fs-4 text-start mt-2 mb-4">Rp{toRupiah(harga)}<small className="fs-6 text-body-secondary fw-light"> / jam</small></h1>
+                        <h1 className="card-title pricing-card-title fs-4 text-start mt-2 mb-4">Rp{toRupiah(props.harga)}<small className="fs-6 text-body-secondary fw-light"> / jam</small></h1>
                         <p className="mb-2 text-start">{props.pilihTanggal.toLocaleDateString('id', {weekday: 'long',year: 'numeric',month: 'long',day: 'numeric'})}</p>
                         <div className="border rounded text-start">
                             <div className="row m-0">
@@ -95,14 +86,14 @@ function KonfirmasiReservasi(props) {
                                     <div className="m-0 p-0 d-flex justify-content-between align-items-center">
                                         <div className="m-0 p-0">
                                             <b className="size-title">LAPANGAN</b>
-                                             <p className="m-0">{reservasi}</p>
+                                             <p className="m-0">{props.reservasi}</p>
                                         </div>
                                         <FontAwesomeIcon className="icon-size" icon={faChevronDown} />
                                     </div>
                                     
                                 </button>
                                 <ul className="dropdown-menu">
-                                    {lapangan.map(x => <DropdownItem key={x.id} id={x.id} methodClick={gantiLapangan} />)}
+                                    {(props.lapangan).map(x => <DropdownItem key={x.id} id={x.id} methodClick={gantiLapangan} />)}
                                 </ul>
                             </div>
                             <div className="row m-0">
@@ -129,15 +120,15 @@ function KonfirmasiReservasi(props) {
                                 </div>
                             </div>
                         </div>
-                        <button className="btn btn-success rounded w-100 align-self-center mt-3 p-2" type="button">
+                        <button className="btn btn-success rounded w-100 align-self-center mt-3 p-2" type="button" disabled={true}>
                             Pesan
                         </button>
                         <div className={style}>
                             <p className="text-start"><b>Total :</b></p>
                             <hr />
                             <div className="d-flex justify-content-between flex-wrap">
-                                <p className="m-0"><b>Rp{toRupiah(harga)} x {jam} jam</b></p>
-                                <p className="m-0">= <b><u>Rp{toRupiah(hargaTotal)}</u></b></p>
+                                <p className="m-0"><b>Rp{toRupiah(props.harga)} x {props.jam} jam</b></p>
+                                <p className="m-0">= <b><u>Rp{toRupiah(props.hargaTotal)}</u></b></p>
                             </div> 
                         </div>
                     </div>
@@ -145,10 +136,10 @@ function KonfirmasiReservasi(props) {
             </div>
             <div className="container-fluid d-flex d-lg-none px-4 py-2 justify-content-between align-items-center fixed-bottom border-top bg-white">
                 <div className="text-start">
-                    <strong>Rp{toRupiah(hargaTotal)}<small className="fs-6 text-body-secondary fw-light"> / {jam} jam</small></strong>
+                    <strong>Rp{toRupiah(props.hargaTotal)}<small className="fs-6 text-body-secondary fw-light"> / {props.jam} jam</small></strong>
                     <p className="m-0"><u>{props.pilihTanggal.toLocaleDateString('id', {weekday: 'long',year: 'numeric',month: 'long',day: 'numeric'})}</u> : <u>08.00-10.00</u></p>
                 </div>
-                <button className="btn btn-success rounded w-25 align-self-center my-3 p-2" type="button">
+                <button className="btn btn-success rounded w-25 align-self-center my-3 p-2" type="button" disabled={true}>
                     Pesan
                 </button>
             </div>

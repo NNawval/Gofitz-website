@@ -4,6 +4,7 @@ import { faFutbol, faMoneyBillWave, faArrowDown, faArrowUp, faRulerCombined } fr
 
 function toRupiah(num) {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    // return num;
 }
 
 function DeskripsiLapangan(props) {
@@ -31,8 +32,8 @@ function DeskripsiLapangan(props) {
                             <div className="mb-1 text-body-secondary">{<FontAwesomeIcon icon={faFutbol} />} {props.jumlahBola} <small className="text-body-secondary fw-light"> bola</small></div>
                             <div className="mb-1 text-body-secondary">{<FontAwesomeIcon icon={faRulerCombined} />} {props.luas} <small className="text-body-secondary fw-light"> meter</small></div>
                         </div>
-                        <p className="card-text mb-auto">{<FontAwesomeIcon icon={faMoneyBillWave} />}<b> Weekday: {"Rp" + toRupiah(props.harga.weekday)}</b><small className="text-body-secondary fw-light"> / jam</small></p>
-                        <p className="card-text mb-auto">{<FontAwesomeIcon icon={faMoneyBillWave} />}<b> Weekend: {"Rp" + toRupiah(props.harga.weekend)}</b><small className="text-body-secondary fw-light"> / jam</small></p>
+                        <p className="card-text mb-auto">{<FontAwesomeIcon icon={faMoneyBillWave} />}<b> Weekday: {"Rp" + toRupiah(props.hargaWeekday)}</b><small className="text-body-secondary fw-light"> / jam</small></p>
+                        <p className="card-text mb-auto">{<FontAwesomeIcon icon={faMoneyBillWave} />}<b> Weekend: {"Rp" + toRupiah(props.hargaWeekend)}</b><small className="text-body-secondary fw-light"> / jam</small></p>
                         <button onClick={setArrow} className="btn btn-outline-success rounded-pill w-75 align-self-center align-self-xl-start mt-3 mt-xl-0" type="button" data-bs-toggle="collapse" data-bs-target={"#deskripsi-" + props.nomorLapangan}>
                             Ketersediaan <FontAwesomeIcon icon={arrow} />
                         </button>

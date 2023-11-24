@@ -4,13 +4,10 @@ import DeskripsiLapangan from "./DeskripsiLapangan";
 import PilihWaktu from "./PilihWaktu";
 
 function PilihLapangan(props) {
-    // ini udh id lapangan yg sama tanggal yg sama
-    const reservasi = [{"codeBooking": "x", "bookingStart": new Date('March 13, 08 07:00'), "bookingEnd": new Date('March 13, 08 08:00'), "idLapangan": "x"}];
-
     return (
         <div className="container-fluid p-0">
-            <DeskripsiLapangan image={props.lapangan.image} nomorLapangan={props.lapangan.id} jenisLapangan={props.lapangan.jenisLapangan} jumlahBola={props.lapangan.jumlahBola} luas={props.lapangan.luas} harga={props.lapangan.harga} />
-            <PilihWaktu lapangan={props.lapangan} listReservasi={reservasi} />
+            <DeskripsiLapangan image={props.lapangan.imageSrc} nomorLapangan={props.lapangan.id} jenisLapangan={props.lapangan.namaLapangan} jumlahBola={props.lapangan.countBola} luas={props.lapangan.sizeLapangan} hargaWeekday={props.lapangan.priceLapanganWeekday} hargaWeekend={props.lapangan.priceLapanganWeekend} />
+            <PilihWaktu lapangan={props.lapangan.id} listReservasi={props.reservasi} />
         </div>
     );
 }
