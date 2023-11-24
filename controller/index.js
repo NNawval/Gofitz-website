@@ -1,6 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const database = require("../models/database")
+const database = require("../view/src/models/database")
 
 const app = express();
 
@@ -15,38 +15,25 @@ let port = 8000;
 app.get("/",async function(req,res){
     let date = new Date();
     let dateTomorrow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
-    // let idLapangan = 1;
-    // let input = {
-    //     "date": date,
-    //     "dateTomorrow": dateTomorrow,
-    //     "idLapangan":idLapangan
-    // }
-    // console.log(input);
-    // let data = await database.getKetersediaan(input);
-    // console.log(typeof date);
-    // console.log(date.year);
-    // let a = toString(date).split("+");
-    // console.log(typeof a);
-    // let c = toString(dateTomorrow).split("+");
-    // console.log(a);
-    // console.log(c);
-    // let b = a[0];
-    // let d = c[0] + ("T00:00:00+00:00");
-    // console.log(b);
-    // console.log(d);
-    // b = new Date(b);
-    // d = new Date(d);
-    // console.log(b);
-    // console.log(d);
-    // let input = {
-    //     "date": b,
-    //     "dateTomorrow": d,
-    //     "idLapangan":1
-    // }
-    // let data = await database.getKetersediaan(input);
-    let data = await database.imageLapangan("poliuretan");
+    date = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()+"T"+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
+    dateTomorrow = dateTomorrow.getFullYear()+"-"+(dateTomorrow.getMonth()+1)+"-"+dateTomorrow.getDate()+"T"+dateTomorrow.getHours()+":"+dateTomorrow.getMinutes()+":"+dateTomorrow.getSeconds();
+    let input = {
+        "date": date,
+        "dateTomorrow": dateTomorrow,
+        "idLapangan":1,
+    }
+
+    // let data = await database.tes();
+    let data = await database.getKetersediaan(input);
+    // // let data = await database.imageLapangan("poliuretan");
+    // console.log(data);
     console.log(data);
-    res.send(data)
+    // console.log(data[0].nyoba);
+    // console.log(typeof data[0].nyoba );
+    // console.log(data[0].scheduleBookingStart);
+    // console.log(typeof data[0].scheduleBookingStart);
+    
+    res.send(data);
 });
 
 app.listen(port,function(){

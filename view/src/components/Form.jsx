@@ -1,12 +1,17 @@
 import React from "react";
 import { useRef, useState} from "react";
 
-function Form(prompt){
+function Form(props){
 
-    function File(prompt){
+    function File(props){
         
-        if (prompt === true){
-            return (ShowImg());
+        if (props === true){
+            return (
+                <div className="col-12">
+                    <label htmlFor="formFile" className="form-label">Upload bukti pembayaran</label>
+                    <input  type="file" className="d-block form-control" accept = "image/png, img/jpeg" placeholder="" />
+                </div>
+              );
         }
         else{
             return(
@@ -15,38 +20,8 @@ function Form(prompt){
         }
     }
 
-    function ShowImg(){
-        const inputRef = useRef(null);
-            const[image, setImage] = useState("");
+    const []
 
-            const handleImageClick = () =>{
-                inputRef.current.click();
-            }
-
-            const handleImageChange = (event) =>{
-                const file = event.target.files[0];
-                console.log(file);
-                setImage(event.target.files[0])
-            }
-            return(
-                <>
-                    <div className="image-upload-contsiner">
-                        <div className="box-decoration">
-                            <label htmlFor="image-upload-input" className="image-upload">{image ? image.name : "choose an image" }</label>
-                            <div onClick={handleImageClick} style={{ cursor : "pointer" }}>
-                                {image ? (
-                                    <img src={URL.createObjectURL(image)} alt=""/>
-                                ) : (
-                                    <img src="../assets/lapangan-poliuretan.jpg" alt="" />
-                                )}
-                            </div>
-                            
-                            <input  type="file" ref={inputRef} onChange={handleImageChange} style={{display : "none"}}  className="d-block form-control"/>
-                        </div>
-                    </div>
-                </>   
-            );
-    }
     return(
         <div className="container-fluid px-5 px-lg-2 mt-4 mx-0 text-start">
             <hr className="d-none d-lg-block" />
@@ -70,10 +45,11 @@ function Form(prompt){
                     <input type="text" className="form-control rounded-3" id="nomor-telepon" placeholder="Nomor telepon" />
                     <label htmlFor="nomor-telepon">Nomor telepon</label>
                 </div>
-                <div className="form-floating">
+                <div className="form-floating mb-3">
                     <input type="email" className="form-control rounded-3" id="email-reservasi" placeholder="Email" />
                     <label htmlFor="email-reservasi">Email</label>
                 </div>
+                {File(props.online)}
                 <small className="text-body-secondary">By clicking Pesan, you agree to the terms of use.</small>
                 <button className="w-100 mt-3 btn btn-lg rounded-3 btn-success" type="submit">Pesan</button>
             </form>

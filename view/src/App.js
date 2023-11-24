@@ -7,7 +7,7 @@ function App() {
   return (
     <div className="App">
       {/* <Ketersediaan /> */}
-      <Reservasi />
+      <Reservasi lapangan={1} online={true} />
     </div>
   );
 }

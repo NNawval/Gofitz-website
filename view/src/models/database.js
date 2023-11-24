@@ -86,29 +86,30 @@ async function countjumlahReservasi(){
     }
 };
 
-async function getDataLapangan (){
+async function getDataLapangan (idLapangan){
     try {
         const { data, error} = await supabase
         .from("lapangan")
-        .select();
-        console.log(data);
+        .select()
+        .eq("id",idLapangan);
         return data;
     } catch (error){
         console.log("gagal");
     }
 };
 
-async function getKetersediaan(prompt){
+async function getKetersediaan(props){
     try{
+        props.date = props.date.getFullYear()+"-"+(props.date.getMonth()+1)+"-"+props.date.getDate()+"T"+props.date.getHours()+":"+props.date.getMinutes()+":"+props.date.getSeconds();
+        props.dateTomorrow = props.dateTomorrow.getFullYear()+"-"+(props.dateTomorrow.getMonth()+1)+"-"+props.dateTomorrow.getDate()+"T"+props.dateTomorrow.getHours()+":"+props.dateTomorrow.getMinutes()+":"+props.~dateTomorrow.getSeconds();
         const { data , error } = await supabase
         .from("reservasi")
-        .select("id,lapanganId,scheduleBookingStart,scheduleBookingEnd")
+        .select()
         .match({
-            'lapanganId': prompt.idLapangan,
+            'lapanganId': props.idLapangan,
         })
-        .gte('scheduleBookingStart',prompt.date)
-        .lt('scheduleBookingStart',prompt.dateTomorrow)
-        console.log(data);
+        .gte('scheduleBookingStart',props.date)
+        .lt('scheduleBookingStart',props.dateTomorrow);
         return data;
     } catch (error){
         console.log("gagal");
@@ -132,7 +133,7 @@ async function tes(){
     const { data , error } = await supabase
     .from("reservasi")
     .select()
-    .eq("id",4)
+    .eq("id",4) 
     return data;
 }
 async function getAllLapangan(){
@@ -145,6 +146,7 @@ async function getAllLapangan(){
         console.log("gagal");
     }
 }
+
 module.exports = {
     supabase,
     getReservasi,
@@ -153,5 +155,6 @@ module.exports = {
     getDataLapangan,
     getKetersediaan,
     tes,
-    imageLapangan
+    imageLapangan,
+    getAllLapangan
 };
