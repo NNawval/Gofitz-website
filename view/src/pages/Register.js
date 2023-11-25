@@ -14,15 +14,15 @@ function Register() {
           <div className="modal-body p-5 pt-0">
             <form className="">
               <div className="form-floating mb-3">
-                <input type="email" className="form-control rounded-3" id="floatingInput" placeholder="name@example.com" />
+                <input type="email" className="form-control rounded-3" id="floatingInput" />
                 <label htmlFor="floatingInput">Email address</label>
               </div>
               <div className="form-floating mb-3">
-                <input type="password" className="form-control rounded-3" id="floatingPassword" placeholder="Password" />
+                <input type="password" className="form-control rounded-3" id="floatingPassword" />
                 <label htmlFor="floatingPassword">Password</label>
               </div>
               <div className="form-floating mb-3">
-                <input type="password" className="form-control rounded-3" id="floatingPasswordConfirmation" placeholder="Confirm Password" />
+                <input type="password" className="form-control rounded-3" id="floatingPasswordConfirmation" />
                 <label htmlFor="floatingPassword">Confirm Password</label>
               </div>
               <button className="w-100 mb-2 btn btn-lg rounded-3 btn-success" type="submit">Sign-up</button>

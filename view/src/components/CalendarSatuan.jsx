@@ -17,7 +17,7 @@ function CalendarSatuan(props) {
                 <p className="m-0 tanggal size-hari">Sa</p>
             </div>
             <div className="row row-cols-auto">
-                {props.tanggal.map(x => <Tanggal key={x[0]} month={props.month} year={props.year} status={x} ubahTanggal={props.ubahTanggal}/>)}
+                {props.tanggal.map(x => <Tanggal key={x[0]} month={props.month} year={props.year} status={x} ubahTanggal={props.ubahTanggal} />)}
             </div>
         </div>
     );
