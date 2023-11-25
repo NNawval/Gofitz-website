@@ -6,6 +6,7 @@ import DashboardOwner from './pages/DashboardOwner';
 import AddLapangan from './components/AddLapangan';
 import Calendar from './components/Calendar';
 import ListLapangan from './components/ListLapangan'
+import EditLapangan from './components/EditLapangan'
 function App() {
   return (
     <BrowserRouter>
@@ -13,7 +14,7 @@ function App() {
 
         <Route path="addLapangan" element={<AddLapangan/>}/>
         <Route path="ListLapangan" element={<ListLapangan/>}/>
-        <Route path="DashboardOwner" element={<DashboardOwner/>}/>
+        <Route path="ListLapangan/EditLapangan/:id" element={<EditLapangan/>}/>
         <Route path="DashboardOwner" element={<DashboardOwner/>}/>
         <Route path="DashboardOwner" element={<DashboardOwner/>}/>
         <Route path="DashboardOwner" element={<DashboardOwner/>}/>

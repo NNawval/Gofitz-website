@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { createClient } from "@supabase/supabase-js";
@@ -15,10 +15,8 @@ const supabase = createClient(supabaseUrl,
 
 
 function ListLapangan() {
-    const [lapangan, setLapangan] = useState([])
-    const [lapangan1, setLapangan1] = useState({
-        tipe: '', bola: '', size: '', weekend: '', weekday: '',image:''
-    })
+    const [lapangan, setLapangan] = useState([]);
+
     useEffect(() => {
         fetchLapangan()
       }, [])
@@ -28,9 +26,9 @@ function ListLapangan() {
       async function fetchLapangan(){
         const {data} = await supabase
           .from('lapangan')
-          .select('*')
+          .select()
           setLapangan(data)
-          console.log(data) 
+  
       }
       function toRupiah(num) {
         return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -57,13 +55,14 @@ function ListLapangan() {
                       <img src={x.imageSrc} alt="lapangan" className="bd-placeholder-img image" />
                       </div>
                       <div className="col p-4 d-flex flex-column position-static text-start">
-                          <strong className="d-inline-block mb-2 text-primary-emphasis"><span className="badge bg-success">Lapangan</span></strong>
+                          <strong className="d-inline-block mb-2 text-primary-emphasis"><span className="badge bg-success">Lapangan {x.nomorLapangan}</span></strong>
                           <div className="row">
                           <div className="col">
-                          <h3 className="mb-0">{x.typeLapangan}</h3>
+                          <h3 className="mb-0">{x.namaLapangan}</h3>
                           </div>
                           <div className="col-4 text-end"> 
-                          <button type="button" class="btn btn-outline-light" >
+                          <button onClick={()=> navigate(`EditLapangan/${x.id}`)}   type="button" class="btn btn-outline-light" >
+                            
                           <FontAwesomeIcon icon={faGear} style={{color: "#6a6d71",}} />
                           </button>
                           </div>
