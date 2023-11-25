@@ -9,7 +9,7 @@ function mouseOut(event) {
     event.target.classList.remove("mouse-over");
 }
 
-function Tanggal(props) {
+function TanggalUbah(props) {
     function setStyle(status) {
         let style = "";
         if (status[0] <= 0) {
@@ -41,4 +41,4 @@ function Tanggal(props) {
     )
 }
 
-export default Tanggal;
+export default TanggalUbah;

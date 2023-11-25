@@ -13,26 +13,28 @@ let port = 8000;
 
 
 app.get("/",async function(req,res){
-    let date = new Date();
-    let dateTomorrow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
-    date = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()+"T"+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
-    dateTomorrow = dateTomorrow.getFullYear()+"-"+(dateTomorrow.getMonth()+1)+"-"+dateTomorrow.getDate()+"T"+dateTomorrow.getHours()+":"+dateTomorrow.getMinutes()+":"+dateTomorrow.getSeconds();
-    let input = {
-        "date": date,
-        "dateTomorrow": dateTomorrow,
-        "idLapangan":1,
-    }
+    // let date = new Date();
+    // let dateTomorrow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+   
+    // let input = {
+    //     "date": date,
+    //     "dateTomorrow": dateTomorrow,
+    //     "idLapangan":1,
+    // }
 
     // let data = await database.tes();
-    let data = await database.getKetersediaan(input);
+    let input ={
+        "namapemesan": "awikwok"
+    }
+    let data = await database.getAllReservasi();
     // // let data = await database.imageLapangan("poliuretan");
     // console.log(data);
-    console.log(data);
+    // console.log(data);
     // console.log(data[0].nyoba);
     // console.log(typeof data[0].nyoba );
     // console.log(data[0].scheduleBookingStart);
     // console.log(typeof data[0].scheduleBookingStart);
-    
+
     res.send(data);
 });
 

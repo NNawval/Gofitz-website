@@ -1,35 +1,36 @@
 import React from "react";
 import lapanganPoliuretan from "../assets/lapangan-poliuretan.jpg";
 import database from "../models/database";
-
+    
 
 function ListReservasi(props){
-    
+    let a = new Date(props.scheduleBookingStart);
+    let c = new Date(props.scheduleBookingEnd);
+    let b = a.toLocaleDateString('id', {weekday: 'long',year: 'numeric',month: 'long',day: 'numeric'});
+    let d = a.toTimeString().split(" ")[0]+"-"+c.toTimeString().split(" ")[0];
     return(
         <div className="text-start container">
             <div class="card shadow">
                 <div class="card-header d-flex justify-content-between align-items-center gap-2">
                     <div className="d-flex align-items-center gap-2">
-                        <p className="badge bg-success m-0">Lapangan 1</p>
-                        <p className="m-0">21 November 2023</p>
+                        <p className="badge bg-success m-0">Lapangan {props.lapangan}</p>
+                        <p className="m-0">{b}</p>
                     </div>
-                    <p className="m-0">08:00-09:00</p>
+                    <p className="m-0">{d}</p>
                 </div>
                 <div class="card-body">
                     <div className="d-flex gap-3">
-                        <img src={lapanganPoliuretan} alt="lapangan" className="" style={{width:"150px", height:"160px", borderRadius:"10px", objectFit:"cover"}} /> 
+                        <img src={props.imageSrc} alt="lapangan" className="" style={{width:"150px", height:"160px", borderRadius:"10px", objectFit:"cover"}} /> 
                         <div className="d-flex w-100 flex-column justify-content-between" >
                             <div className="d-flex flex-column justify-content-between">
                                 <div className="row">
-                                    <h5>Lapangan Poliuretan</h5>
+                                    <h5>{props.namaLapangan}</h5>
                                     <div className="col-8">
-                                        <p className="m-0">Pramaditya Fajri Migfar</p>
-                                        <p className="m-0">pfajrimigfar@gmail.com</p>
-                                        <p className="m-0">081213087650</p>
+                                        <p className="m-0">{props.nama}</p>
                                     </div>
                                     <div className="col-4 border-start">
                                         <p className="m-0">Total</p>
-                                        <p className="m-0"><b>Rp200.000</b></p>
+                                        <p className="m-0"><b>Rp{props.harga}</b></p>
                                     </div>
                                 </div>
                                 <div className="row">

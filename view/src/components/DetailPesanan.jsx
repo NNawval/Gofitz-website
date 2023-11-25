@@ -35,13 +35,13 @@ export default  function DetailPesanan(props) {
                         <h4>Price details</h4>
                     </div>
                     <div className="d-flex justify-content-between">
-                        <p className="m-0">Rp200.000</p>
-                        <p className="m-0">2 jam</p>
+                        <p className="m-0">Rp{props.harga}</p>
+                        <p className="m-0">{props.durasi} jam</p>
                     </div>
                     <hr/>
                     <div className="d-flex justify-content-between">
                         <p className="m-0"><b>Total</b></p>
-                        <p className="m-0"><b>Rp400.000</b></p>
+                        <p className="m-0"><b>Rp{props.totalHarga}</b></p>
                     </div>
                 </div>
             </div>
