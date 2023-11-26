@@ -136,9 +136,13 @@ const EditLapangan = () => {
             if (!response.ok) {
               throw new Error('Network response was not ok');
             }
-      
+    
+            const stringArray = x.imageSrc.split('/');
+
+            // Mengambil elemen terakhir dari array
+            const lastElement = stringArray[stringArray.length - 1];
             const blob = await response.blob();
-            const file = new File([blob], 'image.jpg', { type: 'image/jpeg' });
+            const file = new File([blob], lastElement, { type: 'image/jpeg' });
             setSelectedFile(file);
           } catch (error) {
             console.error('Error fetching image:', error);
