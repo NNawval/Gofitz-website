@@ -6,13 +6,13 @@ import { useNavigate } from "react-router-dom";
 function FormReserve(props){
     const navigate = useNavigate();
 
-
     const[reservasi, setReservasi] = React.useState(
         { namaPemesan: "", lapanganId: props.lapangan, scheduleBookingStart: props.scheduleBookingStart, scheduleBookingEnd: props.scheduleBookingEnd, totalHarga: props.totalHarga, ssPayment: ""
     });
     const [image, setImage] = React.useState("");
     const [selectedFile, setSelectedFile] = React.useState(null);
     const [error, setError] = React.useState(false);
+    const [error2, setError2] = React.useState(false);
 
     const handleChange2 = (event) => {
       setSelectedFile(event.target.files[0]);
@@ -41,45 +41,54 @@ function FormReserve(props){
         await database.createReservasi(dummy);
     }
 
+    async function cekUsername(){
+      let data = await database.getusername( reservasi.namaPemesan);
+      return data;
+    }
+
     const handlerSubmit = async (event) => {
         event.preventDefault();
-
-        if(! props.online){
-          if(reservasi.namaPemesan === "" ){
-            setError(true);
-          }
-          else{
-            createReservasi();
-            navigate("/");
-          }
+        let a  = await cekUsername();
+        console.log(a);
+        if(reservasi.namaPemesan === "" ){
+          setError(true);
+        }
+        else if(a ==  0){
+          setError2(true);
         }
         else{
-         // Check if a file is selected
-          if (selectedFile) {
-            console.log(selectedFile);
-            try {
-              // Upload the file to Supabase storage
-              const { data, error } = await database.supabase
-              .storage
-              .from('SSpayment')
-              .upload(`images/${selectedFile.name}`, selectedFile);
-              reservasi.ssPayment =  selectedFile.name;
+          if(! props.online){
               createReservasi();
               navigate("/");
-              if (error) {
+          }
+          else{
+           // Check if a file is selected
+            if (selectedFile) {
+              console.log(selectedFile);
+              try {
+                // Upload the file to Supabase storage
+                const { data, error } = await database.supabase
+                .storage
+                .from('SSpayment')
+                .upload(`images/${selectedFile.name}`, selectedFile);
+                reservasi.ssPayment =  selectedFile.name;
+                createReservasi();
+                navigate("/");
+                if (error) {
+                  console.error('Error uploading image:', error.message);
+                } else {
+                  console.log('Image uploaded successfully:', data);
+                }
+              } catch (error) {
+                console.log("gagal ke bucket");
                 console.error('Error uploading image:', error.message);
-              } else {
-                console.log('Image uploaded successfully:', data);
               }
-            } catch (error) {
-              console.log("gagal ke bucket");
-              console.error('Error uploading image:', error.message);
-            }
-          } else {
-            // Handle the case where no file is selected
-            console.warn('No file selected for upload');
-            setError(true);
-          };
+            } else {
+              // Handle the case where no file is selected
+              console.warn('No file selected for upload');
+              setError(true);
+            };
+          }
         }
     
         
@@ -133,13 +142,13 @@ function FormReserve(props){
                     <input type="text" className="form-control rounded-3" id="nama" name="namaPemesan" placeholder="Nama"  onChange={handlerChange} />
                     <label htmlFor="nama" >Nama</label>
                 </div>
+                {error2 ?<div>
+               <label className="text-danger">Isi sesuai username </label></div>:""}
                 {File(props.online)}
                 <small className="text-body-secondary">By clicking Pesan, you agree to the terms of use.</small>
-                {error ?
-               <label className="text-danger">Isi semua data</label>:""}
-                {/* <Link to="/"> */}
+                {error ?<div>
+               <label className="text-danger">Isi semua data </label></div>:""}
                 <button className="w-100 mt-3 btn btn-lg rounded-3 btn-success" type="submit" >Pesan</button>
-                {/* </Link> */}
             </form>
         </div>
     );
