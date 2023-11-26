@@ -35,8 +35,10 @@ function cart() {
   };
 
   return (
+    <>
+    <Navbar />
     <div className='container'>
-      <Navbar />
+      
       <div class="container w-75 px-10 mt-5">
         <div class="row gx-20" >
           <div class="col">
@@ -77,6 +79,7 @@ function cart() {
       </div>
 
     </div>
+    </>
   );
 }
 export default cart;

@@ -202,8 +202,9 @@ const EditLapangan = () => {
     console.log(selectedFile)
   };
   return (
+    <>
+    <Navbar />
     <div className="containter-fluid p-0">
-      <Navbar />
       <h1 className="text-center mt-5">EDIT LAPANGAN</h1>
       <div className="container w-75 text-start mt-5 mb-4">
         {loading ? (
@@ -320,6 +321,7 @@ const EditLapangan = () => {
         )}
       </div>
     </div>
+    </>
   );
 };
 

@@ -36,7 +36,7 @@ function ListLapangan() {
      
 
     return (
-      <div>
+      <>
       <Navbar />
       <div className="">
       <h1 className="text-center mt-5">DATA LAPANGAN</h1>
@@ -88,7 +88,7 @@ function ListLapangan() {
             </div>
       </div>
 </div>
-    </div>
+    </>
 
     );
 }

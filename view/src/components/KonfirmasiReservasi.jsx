@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown ,faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import DropdownItem from "./DropdownItem";
 import database from "../models/database";
+import { Link } from "react-router-dom";
 
 function toRupiah(num) {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -101,7 +102,7 @@ function KonfirmasiReservasi(props) {
             scheduleBookingEnd: new Date(props.pilihTanggal.getFullYear(), props.pilihTanggal.getMonth(), props.pilihTanggal.getDate(), props.time.selesai),
             totalHarga: props.hargaTotal,
             lapanganId: parseInt(props.reservasi.split(" ")[1]),
-            id:12})
+            id:props.state.id})
     }
     
 
@@ -153,9 +154,16 @@ function KonfirmasiReservasi(props) {
                             </div>
                         </div>
                         <p className="ps-1 mb-0 mt-1 text-start text-danger">{props.reservasi === "Pilih lapangan" ? "Pilih lapangan terlebih dahulu!" : (!props.canPesan ? "Lapangan tidak tersedia!" : "")}</p>
-                        <button onClick={props.kondisi === "ubahReservasi" ? clickUpdateReservasi : null} className="btn btn-success rounded w-100 align-self-center mt-3 p-2" type="button" disabled={!props.canPesan}>
-                            {props.kondisi !== "ubahReservasi" ? "Pesan" : "Ubah"}
-                        </button>
+                        {props.canPesan ? 
+                            <Link to={props.kondisi === "online" ? "/reservasi" : (props.kondisi === "onSite" ? "/reservasi-onsite" : "/")} state={props.kondisi !== "ubahReservasi" ? {lapangan:parseInt(props.reservasi.split(" ")[1]), harga:props.harga, totalHarga:props.hargaTotal, durasi:props.jam, scheduleBookingStart: new Date(props.pilihTanggal.getFullYear(), props.pilihTanggal.getMonth(), props.pilihTanggal.getDate(), props.time.mulai), scheduleBookingEnd: new Date(props.pilihTanggal.getFullYear(), props.pilihTanggal.getMonth(), props.pilihTanggal.getDate(), props.time.selesai)} : null}>
+                            <button onClick={props.kondisi === "ubahReservasi" ? clickUpdateReservasi : null} className="btn btn-success rounded w-100 align-self-center mt-3 p-2" type="button">
+                                {props.kondisi !== "ubahReservasi" ? "Pesan" : "Ubah"}
+                            </button>
+                            </Link> :
+                            <button onClick={props.kondisi === "ubahReservasi" ? clickUpdateReservasi : null} className="btn btn-success rounded w-100 align-self-center mt-3 p-2" type="button" disabled>
+                                {props.kondisi !== "ubahReservasi" ? "Pesan" : "Ubah"}
+                            </button>
+                        }
                         <div className={style}>
                             <p className="text-start"><b>Total :</b></p>
                             <hr />
@@ -208,10 +216,16 @@ function KonfirmasiReservasi(props) {
                         
                     </div>
                 </div>
-              
-                <button onClick={props.kondisi === "ubahReservasi" ? clickUpdateReservasi : null} className="col-2 btn btn-success rounded align-self-center my-3 p-2" type="button" disabled={!props.canPesan}>
-                    {props.kondisi !== "ubahReservasi" ? "Pesan" : "Ubah"}
-                </button>
+                {props.canPesan ? 
+                    <Link to={props.kondisi === "online" ? "/reservasi" : (props.kondisi === "onSite" ? "/reservasi-onsite" : "/")} state={props.kondisi !== "ubahReservasi" ? {lapangan:parseInt(props.reservasi.split(" ")[1]), harga:props.harga, totalHarga:props.hargaTotal, durasi:props.jam, scheduleBookingStart: new Date(props.pilihTanggal.getFullYear(), props.pilihTanggal.getMonth(), props.pilihTanggal.getDate(), props.time.mulai), scheduleBookingEnd: new Date(props.pilihTanggal.getFullYear(), props.pilihTanggal.getMonth(), props.pilihTanggal.getDate(), props.time.selesai)} : null}>
+                    <button onClick={props.kondisi === "ubahReservasi" ? clickUpdateReservasi : null} className="col-2 btn btn-success rounded align-self-center mt-3 p-2" type="button">
+                        {props.kondisi !== "ubahReservasi" ? "Pesan" : "Ubah"}
+                    </button>
+                    </Link> :
+                    <button onClick={props.kondisi === "ubahReservasi" ? clickUpdateReservasi : null} className="col-2 btn btn-success rounded align-self-center mt-3 p-2" type="button" disabled>
+                        {props.kondisi !== "ubahReservasi" ? "Pesan" : "Ubah"}
+                    </button>
+                }
             </div>
         </>
     );

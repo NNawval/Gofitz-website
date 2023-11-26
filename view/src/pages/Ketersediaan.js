@@ -6,6 +6,7 @@ import Footer from "../components/Footer";
 import Calendar from "../components/Calendar";
 import database from "../models/database";
 import CardPlaceholder from "../components/CardPlaceholder";
+import { useLocation } from "react-router-dom";
 
 function Ketersediaan(props) {
   const [lapangan, setLapangan] = React.useState([]);
@@ -19,6 +20,7 @@ function Ketersediaan(props) {
   const [time, setTime] = React.useState({"mulai" : 7, "selesai" : 8});
   const [canPesan, setCanPesan] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
+  let {state} = useLocation();
 
   React.useEffect(() => { 
     // getLapangan();
@@ -67,6 +69,18 @@ function Ketersediaan(props) {
     }
     
     // console.log(output);
+    if (props.kondisi === "ubahReservasi") {
+      let index2 = state.idLapangan;
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].nomorLapangan === index2) {
+          index2 = i;
+          break;
+        }
+      }
+      for (let i = new Date(state.scheduleBookingStart).getHours(); i < new Date(state.scheduleBookingEnd).getHours(); i++) {
+        array[index2][i-7][1] = false;
+      }
+    }
     checkKetersediaan(reservasi, time, array, data, setCanPesan);
     // }
 
@@ -155,7 +169,7 @@ function Ketersediaan(props) {
             {/* {lapangan.map(daftarLapangan)} */}
           </div>
           <div className="col-4">
-            <KonfirmasiReservasi kondisi={props.kondisi} lapangan={lapangan} pilihTanggal={tanggal} harga={harga} ubahHarga={setHarga} hargaTotal={hargaTotal} ubahHargaTotal={setHargaTotal} reservasi={reservasi} ubahReservasi={setReservasi} jam={jam} ubahJam={setJam} waktuKosong={waktuKosong} time={time} setTime={setTime} setCanPesan={setCanPesan} checkKetersediaan={checkKetersediaan} canPesan={canPesan} />
+            <KonfirmasiReservasi kondisi={props.kondisi} state={state} lapangan={lapangan} pilihTanggal={tanggal} harga={harga} ubahHarga={setHarga} hargaTotal={hargaTotal} ubahHargaTotal={setHargaTotal} reservasi={reservasi} ubahReservasi={setReservasi} jam={jam} ubahJam={setJam} waktuKosong={waktuKosong} time={time} setTime={setTime} setCanPesan={setCanPesan} checkKetersediaan={checkKetersediaan} canPesan={canPesan} />
           </div>
         </div>
       </div>

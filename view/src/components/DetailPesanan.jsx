@@ -3,7 +3,7 @@ import database from "../models/database"
 
 export default  function DetailPesanan(props) {
     const [dataLapangan, setdata] = useState([]);
-
+    
     useEffect(()=>{
         getData();
     }, []);

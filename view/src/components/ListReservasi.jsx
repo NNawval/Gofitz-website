@@ -1,7 +1,7 @@
 import React from "react";
 import lapanganPoliuretan from "../assets/lapangan-poliuretan.jpg";
 import database from "../models/database";
-    
+import { Link } from "react-router-dom";
 
 function ListReservasi(props){
     let a = new Date(props.scheduleBookingStart);
@@ -34,7 +34,9 @@ function ListReservasi(props){
                                     </div>
                                 </div>
                                 <div className="row">
-                                    <button className="btn btn-outline-success w-25 align-self-end col-4 offset-8 mt-3">Ubah</button>
+                                    <Link to="/ketersediaan-ubah-reservasi" state={{id:props.id, idLapangan:props.lapangan, totalHarga:props.harga, scheduleBookingStart:props.scheduleBookingStart, scheduleBookingEnd:props.scheduleBookingEnd}}>
+                                        <button className="btn btn-outline-success w-25 align-self-end col-4 offset-8 mt-3">Ubah</button>
+                                    </Link>
                                 </div>
                             </div>                            
                         </div>

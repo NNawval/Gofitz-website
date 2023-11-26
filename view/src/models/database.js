@@ -49,7 +49,7 @@ async function getDataLapangan (idLapangan){
         const { data, error} = await supabase
         .from("lapangan")
         .select()
-        .eq("id",idLapangan);
+        .eq("nomorLapangan",idLapangan);
         return data;
     } catch (error){
         console.log("gagal");

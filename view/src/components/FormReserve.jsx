@@ -1,28 +1,22 @@
 import React from "react";
 import database from "../models/database";
-import {Form, Card} from "react-bootstrap"
+import {Form, Card, Image} from "react-bootstrap"
+import { useNavigate } from "react-router-dom";
 
 function FormReserve(props){
+    const navigate = useNavigate();
+
 
     const[reservasi, setReservasi] = React.useState(
-        { namaPemesan: "", lapanganId: props.lapangan, scheduleBookingStart: new Date(), scheduleBookingEnd: new Date( new Date().getTime() + 2*3600*1000), totalHarga: props.totalHarga, ssPayment: ""
+        { namaPemesan: "", lapanganId: props.lapangan, scheduleBookingStart: props.scheduleBookingStart, scheduleBookingEnd: props.scheduleBookingEnd, totalHarga: props.totalHarga, ssPayment: ""
     });
-
     const [image, setImage] = React.useState("");
-
     const [selectedFile, setSelectedFile] = React.useState(null);
+    const [error, setError] = React.useState(false);
 
     const handleChange2 = (event) => {
       setSelectedFile(event.target.files[0]);
-      const input = event.currentTarget;
-  
-      var reader = new FileReader();
-      reader.onload = function () {
-        const dataURL = reader.result;
-        setImage({ name: input.files[0].name, src: dataURL });
-      };
-      reader.readAsDataURL(input.files[0]);
-      console.log(image.name)
+      
     };
 
     function handlerChange(event){
@@ -41,39 +35,55 @@ function FormReserve(props){
     // }
 
     async function createReservasi(){
-        let dummy = reservasi
-        dummy.ssPayment = selectedFile.name;
+        let dummy = reservasi;
+        if(props.online){
+        dummy.ssPayment =  "https://rrdwyabynnlseyxhwqqx.supabase.co/storage/v1/object/public/SSpayment/images/"+ selectedFile.name;}
         await database.createReservasi(dummy);
     }
 
     const handlerSubmit = async (event) => {
         event.preventDefault();
-    
-        // Check if a file is selected
-        if (selectedFile) {
-          console.log("masuk");
-          try {
-            // Upload the file to Supabase storage
-            const { data, error } = await database.supabase
-            .storage
-            .from('SSpayment')
-            .upload(`images/${selectedFile.name}`, selectedFile);
-            console.log("masuk 2");
-            if (error) {
-              console.error('Error uploading image:', error.message);
-            } else {
-              console.log('Image uploaded successfully:', data);
-            }
-          } catch (error) {
-            console.log("gagal ke bucket");
-            console.error('Error uploading image:', error.message);
+
+        if(! props.online){
+          if(reservasi.namaPemesan === "" ){
+            setError(true);
           }
-        } else {
-          // Handle the case where no file is selected
-          console.warn('No file selected for upload');
-        };
-        reservasi.ssPayment =  selectedFile.name;
-        createReservasi();
+          else{
+            createReservasi();
+            navigate("/");
+          }
+        }
+        else{
+         // Check if a file is selected
+          if (selectedFile) {
+            console.log(selectedFile);
+            try {
+              // Upload the file to Supabase storage
+              const { data, error } = await database.supabase
+              .storage
+              .from('SSpayment')
+              .upload(`images/${selectedFile.name}`, selectedFile);
+              reservasi.ssPayment =  selectedFile.name;
+              createReservasi();
+              navigate("/");
+              if (error) {
+                console.error('Error uploading image:', error.message);
+              } else {
+                console.log('Image uploaded successfully:', data);
+              }
+            } catch (error) {
+              console.log("gagal ke bucket");
+              console.error('Error uploading image:', error.message);
+            }
+          } else {
+            // Handle the case where no file is selected
+            console.warn('No file selected for upload');
+            setError(true);
+          };
+        }
+    
+        
+        
       };
 
     function File(props){
@@ -84,7 +94,13 @@ function FormReserve(props){
                 <Form.Group className="mb-3" style={{maxWidth: "500px"}}>
                     <Form.Control type="file" accept="image/png, image/jpeg" onChange={handleChange2}/>
                 </Form.Group>
-                <Card.Img variant="top" src={image.src} />
+                {selectedFile && (
+        <div>
+          <strong></strong>
+          <Image src={URL.createObjectURL(selectedFile)} alt="Selected" fluid />
+        </div>
+      )}
+
                 </div>
               );
         }
@@ -119,7 +135,11 @@ function FormReserve(props){
                 </div>
                 {File(props.online)}
                 <small className="text-body-secondary">By clicking Pesan, you agree to the terms of use.</small>
+                {error ?
+               <label className="text-danger">Isi semua data</label>:""}
+                {/* <Link to="/"> */}
                 <button className="w-100 mt-3 btn btn-lg rounded-3 btn-success" type="submit" >Pesan</button>
+                {/* </Link> */}
             </form>
         </div>
     );

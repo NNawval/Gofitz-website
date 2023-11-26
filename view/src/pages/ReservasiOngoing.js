@@ -122,7 +122,7 @@ function ReservasiOngoing(){
                             return  lapangan === lapanganAwal ? x : ( x.nomorLapangan === parseInt(lapangan.split(" ")[1])) ;
                         }) 
                         .map((x) => 
-                        <ListReservasi imageSrc={x.imageSrc} lapangan= {x.lapanganId} harga = {x.totalHarga} nama ={x.namaPemesan} namaLapangan={x.namaLapangan} scheduleBookingStart={x.scheduleBookingStart} scheduleBookingEnd={x.scheduleBookingEnd}/> )}
+                        <ListReservasi id={x.id} imageSrc={x.imageSrc} lapangan= {x.lapanganId} harga = {x.totalHarga} nama ={x.namaPemesan} namaLapangan={x.namaLapangan} scheduleBookingStart={x.scheduleBookingStart} scheduleBookingEnd={x.scheduleBookingEnd}/> )}
                 </div>
             </div>
             <Footer/>
