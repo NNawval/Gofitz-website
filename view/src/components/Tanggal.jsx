@@ -28,16 +28,26 @@ function Tanggal(props) {
         return style;
     }
 
-    function gantiTanggal(event) {
+    async function gantiTanggal(event) {
+        await props.getKetersediaan(new Date(props.year, props.month, props.status[0]), new Date(new Date(props.year, props.month, props.status[0]).getTime() + 24 * 60 * 60 * 1000));
+        // props.isReserved(props.ketersediaan, props.waktuKosong, props.lapangan);
         props.ubahTanggal(new Date(props.year, props.month, event.target.innerText));
+        let index;
+        for (let i = 0; i < props.lapangan.length; i++) {
+            if(props.lapangan[i].nomorLapangan === parseInt(props.reservasi.split(" ")[1])) {
+              index = i;
+              break;
+            }
+        }
         if (props.reservasi !== "Pilih lapangan") {
             if (((new Date(props.year, props.month, event.target.innerText)).getDay() === 0) || ((new Date(props.year, props.month, event.target.innerText)).getDay() === 6)) {
-                props.ubahHarga(props.lapangan[parseInt((props.reservasi).split(" ")[1])-1].priceLapanganWeekend);
-                props.ubahHargaTotal(props.lapangan[parseInt((props.reservasi).split(" ")[1])-1].priceLapanganWeekend * (props.jam));
+                props.ubahHarga(props.lapangan[index].priceLapanganWeekend);
+                props.ubahHargaTotal(props.lapangan[index].priceLapanganWeekend * (props.jam));
             } else {
-                props.ubahHarga(props.lapangan[parseInt((props.reservasi).split(" ")[1])-1].priceLapanganWeekday);
-                props.ubahHargaTotal(props.lapangan[parseInt((props.reservasi).split(" ")[1])-1].priceLapanganWeekday * (props.jam));
+                props.ubahHarga(props.lapangan[index].priceLapanganWeekday);
+                props.ubahHargaTotal(props.lapangan[index].priceLapanganWeekday * (props.jam));
             }
+            // props.checkKetersediaan(props.reservasi, props.time, props.waktuKosong, props.lapangan, props.setCanPesan);
         }
         
         let button = document.getElementsByClassName("enabled");
@@ -45,6 +55,9 @@ function Tanggal(props) {
             button[i].classList.remove("mouse-click");
         }
         event.target.classList.add("mouse-click");
+        
+        
+
     }
     return (
         <button onClick={gantiTanggal} onMouseOver={mouseOver} onMouseOut={mouseOut} className={setStyle(props.status)} data-bs-toggle="button">{props.status[0]}</button>

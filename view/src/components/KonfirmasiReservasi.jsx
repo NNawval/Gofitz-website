@@ -3,6 +3,7 @@ import "../styles/konfirmasiReservasi.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown ,faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import DropdownItem from "./DropdownItem";
+import database from "../models/database";
 
 function toRupiah(num) {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -19,59 +20,90 @@ function toTime(time) {
 
 function KonfirmasiReservasi(props) {
     const [style, setStyle] = React.useState("mt-3 d-none");
-    const [time, setTime] = React.useState({"mulai" : 7, "selesai" : 8});
 
     function incrementStart() {
-        if (time.mulai < 20) {
-            if (time.selesai -time.mulai === 1) {
-                setTime({"mulai": time.mulai + 1, "selesai": time.selesai + 1});
+        if (props.time.mulai < 20) {
+            if (props.time.selesai -props.time.mulai === 1) {
+                props.setTime({"mulai": props.time.mulai + 1, "selesai": props.time.selesai + 1});
+                props.checkKetersediaan(props.reservasi, {"mulai": props.time.mulai + 1, "selesai": props.time.selesai + 1}, props.waktuKosong, props.lapangan, props.setCanPesan)
             } else {
-                setTime({"mulai": time.mulai + 1, "selesai": time.selesai});
-                props.ubahJam(time.selesai - time.mulai - 1);
-                props.ubahHargaTotal(props.harga * (time.selesai - time.mulai - 1));
+                props.setTime({"mulai": props.time.mulai + 1, "selesai": props.time.selesai});
+                props.ubahJam(props.time.selesai - props.time.mulai - 1);
+                if (props.reservasi !== "Pilih lapangan") {
+                    props.ubahHargaTotal(props.harga * (props.time.selesai - props.time.mulai - 1));
+                }
+               
+                props.checkKetersediaan(props.reservasi, {"mulai": props.time.mulai + 1, "selesai": props.time.selesai}, props.waktuKosong, props.lapangan, props.setCanPesan)
             }
         }
     }
 
     function incrementEnd() {
-        if (time.selesai < 21 && (time.selesai - time.mulai) < 6) {
-            setTime({"mulai": time.mulai, "selesai": time.selesai + 1});
-            props.ubahJam(time.selesai - time.mulai + 1);
-            props.ubahHargaTotal(props.harga * (time.selesai - time.mulai + 1));
+        if (props.time.selesai < 21 && (props.time.selesai - props.time.mulai) < 6) {
+            props.setTime({"mulai": props.time.mulai, "selesai": props.time.selesai + 1});
+            props.ubahJam(props.time.selesai - props.time.mulai + 1);
+            if (props.reservasi !== "Pilih lapangan") {
+                props.ubahHargaTotal(props.harga * (props.time.selesai - props.time.mulai + 1));
+            }
+            props.checkKetersediaan(props.reservasi, {"mulai": props.time.mulai, "selesai": props.time.selesai + 1}, props.waktuKosong, props.lapangan, props.setCanPesan)
         }
     }
 
     function decrementStart() {
-        if (time.mulai > 7 && (time.selesai - time.mulai) < 6) {
-            setTime({"mulai": time.mulai - 1, "selesai": time.selesai});
-            props.ubahJam(time.selesai - time.mulai + 1);
-            props.ubahHargaTotal(props.harga * (time.selesai - time.mulai + 1));
+        if (props.time.mulai > 7 && (props.time.selesai - props.time.mulai) < 6) {
+            props.setTime({"mulai": props.time.mulai - 1, "selesai": props.time.selesai});
+            props.ubahJam(props.time.selesai - props.time.mulai + 1);
+            if (props.reservasi !== "Pilih lapangan") {
+                props.ubahHargaTotal(props.harga * (props.time.selesai - props.time.mulai + 1));
+            }
+            props.checkKetersediaan(props.reservasi, {"mulai": props.time.mulai-1, "selesai": props.time.selesai}, props.waktuKosong, props.lapangan, props.setCanPesan)
         }
     }
 
     function decrementEnd() {
-        if (time.selesai > 8) {
-            if (time.selesai - time.mulai === 1) {
-                setTime({"mulai": time.mulai - 1, "selesai": time.selesai - 1});
+        if (props.time.selesai > 8) {
+            if (props.time.selesai - props.time.mulai === 1) {
+                props.setTime({"mulai": props.time.mulai - 1, "selesai": props.time.selesai - 1});
+                props.checkKetersediaan(props.reservasi, {"mulai": props.time.mulai-1, "selesai": props.time.selesai - 1}, props.waktuKosong, props.lapangan, props.setCanPesan)
             } else {
-                setTime({"mulai": time.mulai, "selesai": time.selesai - 1});
-                props.ubahJam(time.selesai - time.mulai - 1);
-                props.ubahHargaTotal(props.harga * (time.selesai - time.mulai - 1));
+                props.setTime({"mulai": props.time.mulai, "selesai": props.time.selesai - 1});
+                props.ubahJam(props.time.selesai - props.time.mulai - 1);
+                if (props.reservasi !== "Pilih lapangan") {
+                    props.ubahHargaTotal(props.harga * (props.time.selesai - props.time.mulai - 1));
+                }
+                props.checkKetersediaan(props.reservasi, {"mulai": props.time.mulai, "selesai": props.time.selesai - 1}, props.waktuKosong, props.lapangan, props.setCanPesan);
             }
         }
     }
 
     function gantiLapangan(event) {
         props.ubahReservasi(event.target.innerText);
+        let index;
+        for (let i = 0; i < props.lapangan.length; i++) {
+            if(props.lapangan[i].nomorLapangan === parseInt(event.target.innerText.split(" ")[1])) {
+              index = i;
+              break;
+            }
+        }
         if ((props.pilihTanggal.getDay() === 0) || (props.pilihTanggal.getDay() === 6)) {
-            props.ubahHarga(props.lapangan[parseInt(event.target.innerText.split(" ")[1])-1].priceLapanganWeekend);
-            props.ubahHargaTotal(props.lapangan[parseInt(event.target.innerText.split(" ")[1])-1].priceLapanganWeekend * (time.selesai-time.mulai));
+            props.ubahHarga(props.lapangan[index].priceLapanganWeekend);
+            props.ubahHargaTotal(props.lapangan[index].priceLapanganWeekend * (props.time.selesai-props.time.mulai));
         } else {
-            props.ubahHarga(props.lapangan[parseInt(event.target.innerText.split(" ")[1])-1].priceLapanganWeekday);
-            props.ubahHargaTotal(props.lapangan[parseInt(event.target.innerText.split(" ")[1])-1].priceLapanganWeekday * (time.selesai-time.mulai));
+            props.ubahHarga(props.lapangan[index].priceLapanganWeekday);
+            props.ubahHargaTotal(props.lapangan[index].priceLapanganWeekday * (props.time.selesai-props.time.mulai));
         }
         setStyle("mt-3 d-block");
+        props.checkKetersediaan(event.target.innerText, props.time, props.waktuKosong, props.lapangan, props.setCanPesan);
     }
+
+    async function clickUpdateReservasi() {
+        await database.updateReservasi({scheduleBookingStart: new Date(props.pilihTanggal.getFullYear(), props.pilihTanggal.getMonth(), props.pilihTanggal.getDate(), props.time.mulai),
+            scheduleBookingEnd: new Date(props.pilihTanggal.getFullYear(), props.pilihTanggal.getMonth(), props.pilihTanggal.getDate(), props.time.selesai),
+            totalHarga: props.hargaTotal,
+            lapanganId: parseInt(props.reservasi.split(" ")[1]),
+            id:12})
+    }
+    
 
     return (
         <>
@@ -93,14 +125,14 @@ function KonfirmasiReservasi(props) {
                                     
                                 </button>
                                 <ul className="dropdown-menu">
-                                    {(props.lapangan).map(x => <DropdownItem key={x.id} id={x.id} methodClick={gantiLapangan} />)}
+                                    {(props.lapangan).map(x => <DropdownItem key={x.id} id={x.nomorLapangan} methodClick={gantiLapangan} />)}
                                 </ul>
                             </div>
                             <div className="row m-0">
                                 <div className="col-6 border-end pb-2 pt-1 d-flex justify-content-between align-items-center">
                                     <div>
                                         <b className="size-title">MULAI</b>
-                                        <p className="m-0">{toTime(time.mulai)} : 00</p>
+                                        <p className="m-0">{toTime(props.time.mulai)} : 00</p>
                                     </div>
                                     <div className="row">
                                         <button onClick={incrementStart} className="p-0 me-2 remove-button"><FontAwesomeIcon className="icon-size" icon={faChevronUp} /></button>
@@ -111,7 +143,7 @@ function KonfirmasiReservasi(props) {
                                 <div className="col-6 pb-2 pt-1 d-flex justify-content-between align-items-center">
                                     <div>
                                         <b className="size-title">SELESAI</b>
-                                        <p className="m-0">{toTime(time.selesai)} : 00</p>
+                                        <p className="m-0">{toTime(props.time.selesai)} : 00</p>
                                     </div>
                                     <div className="row">
                                         <button onClick={incrementEnd} className="col-12 p-0 me-2 remove-button"><FontAwesomeIcon className="icon-size" icon={faChevronUp} /></button>
@@ -120,8 +152,9 @@ function KonfirmasiReservasi(props) {
                                 </div>
                             </div>
                         </div>
-                        <button className="btn btn-success rounded w-100 align-self-center mt-3 p-2" type="button" disabled={true}>
-                            Pesan
+                        <p className="ps-1 mb-0 mt-1 text-start text-danger">{props.reservasi === "Pilih lapangan" ? "Pilih lapangan terlebih dahulu!" : (!props.canPesan ? "Lapangan tidak tersedia!" : "")}</p>
+                        <button onClick={props.kondisi === "ubahReservasi" ? clickUpdateReservasi : null} className="btn btn-success rounded w-100 align-self-center mt-3 p-2" type="button" disabled={!props.canPesan}>
+                            {props.kondisi !== "ubahReservasi" ? "Pesan" : "Ubah"}
                         </button>
                         <div className={style}>
                             <p className="text-start"><b>Total :</b></p>
@@ -134,13 +167,50 @@ function KonfirmasiReservasi(props) {
                     </div>
                 </div>
             </div>
-            <div className="container-fluid d-flex d-lg-none px-4 py-2 justify-content-between align-items-center fixed-bottom border-top bg-white">
-                <div className="text-start">
-                    <strong>Rp{toRupiah(props.hargaTotal)}<small className="fs-6 text-body-secondary fw-light"> / {props.jam} jam</small></strong>
-                    <p className="m-0"><u>{props.pilihTanggal.toLocaleDateString('id', {weekday: 'long',year: 'numeric',month: 'long',day: 'numeric'})}</u> : <u>08.00-10.00</u></p>
+            <div className="container-fluid row d-flex d-lg-none px-4 py-2 justify-content-between align-items-center fixed-bottom border-top bg-white">
+                <div className="text-start col-6">
+                    <p className="m-0"><u>{props.pilihTanggal.toLocaleDateString('id', {weekday: 'long',year: 'numeric',month: 'long',day: 'numeric'})}</u></p>
+                    <div className="d-flex justify-content-start align-items-center">
+                        <strong>Rp{toRupiah(props.hargaTotal)}<small className="fs-6 text-body-secondary fw-light"> / {props.jam} jam</small></strong>
+                        <button className="d-flex justify-content-between align-items-center style-dropdown text-start btn" type="button" data-bs-toggle="dropdown" >
+                            <p className="m-0 me-2">{props.reservasi}</p>
+                            <FontAwesomeIcon className="icon-size" icon={faChevronDown} />
+                        </button>
+                        <ul className="dropdown-menu">
+                            {(props.lapangan).map(x => <DropdownItem key={x.id} id={x.nomorLapangan} methodClick={gantiLapangan} />)}
+                        </ul>
+                    </div>
                 </div>
-                <button className="btn btn-success rounded w-25 align-self-center my-3 p-2" type="button" disabled={true}>
-                    Pesan
+                <div className="col-4">
+                    <div className="d-flex justify-content-center gap-3 align-items-center">
+                        <div className="d-flex flex-row gap-2">
+                            <div>
+                                <b className="size-title">MULAI</b>
+                                <p className="m-0">{toTime(props.time.mulai)} : 00</p>
+                            </div>
+                            <div className="row">
+                                <button onClick={incrementStart} className="p-0 me-2 remove-button"><FontAwesomeIcon className="icon-size" icon={faChevronUp} /></button>
+                                <button onClick={decrementStart} className="p-0 me-2 remove-button"><FontAwesomeIcon className="icon-size" icon={faChevronDown} /></button>
+                            </div>
+                        </div>
+                        
+                        <div className="d-flex flex-row gap-2">
+                            <div>
+                                <b className="size-title">SELESAI</b>
+                                <p className="m-0">{toTime(props.time.selesai)} : 00</p>
+                            </div>
+                            
+                            <div className="row">
+                                <button onClick={incrementEnd} className="col-12 p-0 me-2 remove-button"><FontAwesomeIcon className="icon-size" icon={faChevronUp} /></button>
+                                <button onClick={decrementEnd} className="col-12 p-0 me-2 remove-button"><FontAwesomeIcon className="icon-size" icon={faChevronDown} /></button>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+              
+                <button onClick={props.kondisi === "ubahReservasi" ? clickUpdateReservasi : null} className="col-2 btn btn-success rounded align-self-center my-3 p-2" type="button" disabled={!props.canPesan}>
+                    {props.kondisi !== "ubahReservasi" ? "Pesan" : "Ubah"}
                 </button>
             </div>
         </>

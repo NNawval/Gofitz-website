@@ -5,48 +5,6 @@ const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
 
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-
-
-// async function getData(){
-//     try{
-//         const {data,error} = await supabase
-//         .from('tes')
-//         .select()
-//         console.log(data);
-//         return data
-//     } catch (error){
-//         console.log("gagal select");
-//     }
-// }
-
-// async function addData(){
-//     try{
-//         const {data, error} = await supabase
-//         .from('tes')
-//         .insert({
-//             nama: "tikus",
-//             nomor: 2
-//         })
-//         console.log(data);
-//     }
-//     catch(error){
-//         console.log("gagal insert")
-//     }
-// }
-
-// async function updateData(){
-//     try{
-//         const { error } = await supabase
-//             .from('tes')
-//             .update({nama: "angsa"})
-//             .eq('id',4);
-//             console.log("sukses");
-//     }
-//     catch(error){
-//         console.log("gagal");
-//     }
-// }
-
 async function getReservasi(prompt){
     try{
         const {data, error} = await supabase
@@ -86,29 +44,27 @@ async function countjumlahReservasi(){
     }
 };
 
-async function getDataLapangan (){
+async function getDataLapangan (idLapangan){
     try {
         const { data, error} = await supabase
         .from("lapangan")
-        .select();
-        console.log(data);
+        .select()
+        .eq("id",idLapangan);
         return data;
     } catch (error){
         console.log("gagal");
     }
 };
 
-async function getKetersediaan(prompt){
+async function getKetersediaan(props){
     try{
+        props.date = props.date.getFullYear()+"-"+(props.date.getMonth()+1)+"-"+props.date.getDate()+"T00:00:00";
+        props.dateTomorrow = props.dateTomorrow.getFullYear()+"-"+(props.dateTomorrow.getMonth()+1)+"-"+props.dateTomorrow.getDate()+"T00:00:00";
         const { data , error } = await supabase
         .from("reservasi")
-        .select("id,lapanganId,scheduleBookingStart,scheduleBookingEnd")
-        .match({
-            'lapanganId': prompt.idLapangan,
-        })
-        .gte('scheduleBookingStart',prompt.date)
-        .lt('scheduleBookingStart',prompt.dateTomorrow)
-        console.log(data);
+        .select()
+        .gte('scheduleBookingStart',props.date)
+        .lte('scheduleBookingStart',props.dateTomorrow);
         return data;
     } catch (error){
         console.log("gagal");
@@ -132,7 +88,7 @@ async function tes(){
     const { data , error } = await supabase
     .from("reservasi")
     .select()
-    .eq("id",4)
+    .eq("id",4) 
     return data;
 }
 async function getAllLapangan(){
@@ -140,12 +96,188 @@ async function getAllLapangan(){
         const {data,error} = await supabase
         .from("lapangan")
         .select()
-        .order("id", {ascending: true});
+        .order("nomorLapangan");
         return data;
     } catch (error) {
         console.log("gagal");
     }
 }
+
+async function getNomorLapangan(){
+    try {
+        const{data,error} = await supabase
+        .from("lapangan")
+        .select("nomorLapangan");
+        return data;
+    } catch (error) {
+        console.log("gagal");
+    }
+}
+
+async function createReservasi(props){
+    try {
+        props.scheduleBookingStart = props.scheduleBookingStart.getFullYear()+"-"+(props.scheduleBookingStart.getMonth()+1)+"-"+props.scheduleBookingStart.getDate()+"T"+props.scheduleBookingStart.getHours()+":"+props.scheduleBookingStart.getMinutes()+":"+props.scheduleBookingStart.getSeconds();
+        props.scheduleBookingEnd = props.scheduleBookingEnd.getFullYear()+"-"+(props.scheduleBookingEnd.getMonth()+1)+"-"+props.scheduleBookingEnd.getDate()+"T"+props.scheduleBookingEnd.getHours()+":"+props.scheduleBookingEnd.getMinutes()+":"+props.scheduleBookingEnd.getSeconds();
+        const{data, error} = await supabase
+            .from('reservasi')
+            .insert({"namaPemesan": props.namaPemesan, "lapanganId": props.lapanganId, "scheduleBookingStart": props.scheduleBookingStart, "scheduleBookingEnd": props.scheduleBookingEnd, "totalHarga": props.totalHarga, "ssPayment": "https://rrdwyabynnlseyxhwqqx.supabase.co/storage/v1/object/public/SSpayment/images/"+props.ssPayment });
+    } catch (error) {
+      console.log("gagal");
+    }
+}
+
+async function getAllReservasi(){
+    try {
+        let date = new Date();
+        date = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()+"T"+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
+        const{data , error} = await supabase
+        .from("reservasilapangan")
+        .select()
+        .gte('scheduleBookingStart',date);
+        return data;
+    } catch (error) {   
+        console.log("gagal");
+    }
+}
+
+async function getReservasibyName(props){
+
+        // let date = new Date();
+        // let dateTomorrow = new Date(props.date.getTime() + 24 * 60 * 60 * 1000);
+        // date = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()+"T"+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
+        // dateTomorrow = dateTomorrow.getFullYear()+"-"+(dateTomorrow.getMonth()+1)+"-"+dateTomorrow.getDate()+"T00:00:00";
+        // let nama = props.namaPemesan;
+        const{data , error}  = await supabase
+        .from("reservasilapangan")
+        .select()
+        .like("namaPemesan",props.namaPemesan);
+        // // .like("namaPemesan","%"+{nama}+"%")
+        // .gte('scheduleBookingStart',date)
+        // .lte('scheduleBookingStart',dateTomorrow);
+        if(error){
+            console.error();
+        }
+        else {
+            return data;
+        }
+}
+
+async function getReservasibyLapangan(props){
+    try {
+        const{data , error} = await supabase
+        .from("reservasilapangan")
+        .select()
+        .eq("lapanganId",props.lapanganId);
+        console.log(data);
+        return data;
+    } catch (error) {   
+        console.log("gagal");
+    }
+}
+
+async function getReservasibyTanggal(props){
+    try {
+        props.date = props.date.getFullYear()+"-"+(props.date.getMonth()+1)+"-"+props.date.getDate()+"T"+props.date.getHours()+":"+props.date.getMinutes()+":"+props.date.getSeconds();
+        const{data , error} = await supabase
+        .from("reservasilapangan")
+        .select()
+        .gte('scheduleBookingStart',props.date);
+        return data;
+    } catch (error) {   
+        console.error()
+        console.log("gagal");
+    }
+}
+
+async function getReservasibyNameandLapangan(props){
+    try {
+        let date = new Date();
+        date = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()+"T"+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
+        const{data , error} = await supabase
+        .from("reservasilapangan")
+        .select()
+        .match({
+            "namaPemesan": props.namaPemesan,
+            "lapanganId":props.lapanganId
+        })
+        .gte('scheduleBookingStart',date);
+        return data;
+    } catch (error) {   
+        console.log("gagal");
+    }
+}
+
+async function getReservasibyNameandTanggal(props){
+    try {
+        let dateTomorrow = new Date(props.date.getTime() + 24 * 60 * 60 * 1000);
+        props.date = props.date.getFullYear()+"-"+(props.date.getMonth()+1)+"-"+props.date.getDate()+"T"+props.date.getHours()+":"+props.date.getMinutes()+":"+props.date.getSeconds();
+        dateTomorrow = dateTomorrow.getFullYear()+"-"+(dateTomorrow.getMonth()+1)+"-"+dateTomorrow.getDate()+"T00:00:00";
+        const{data , error} = await supabase
+        .from("reservasilapangan")
+        .select()
+        .eq("namaPemesan",props.namaPemesan)
+        .gte('scheduleBookingStart',props.date)
+        .lte('scheduleBookingStart',dateTomorrow);
+        return data;
+    } catch (error) {   
+        console.log("gagal");
+    }
+}
+
+async function getReservasibyTanggalandLapangan(props){
+    try {
+        let dateTomorrow = new Date(props.date.getTime() + 24 * 60 * 60 * 1000);
+        props.date = props.date.getFullYear()+"-"+(props.date.getMonth()+1)+"-"+props.date.getDate()+"T"+props.date.getHours()+":"+props.date.getMinutes()+":"+props.date.getSeconds();
+        dateTomorrow = dateTomorrow.getFullYear()+"-"+(dateTomorrow.getMonth()+1)+"-"+dateTomorrow.getDate()+"T00:00:00";
+        const{data , error} = await supabase
+        .from("reservasilapangan")
+        .select()
+        .eq("lapanganId",props.lapanganId)
+        .gte('scheduleBookingStart',props.date)
+        .lte('scheduleBookingStart',dateTomorrow);
+        return data;
+    } catch (error) {   
+        console.log("gagal");
+    }
+}
+
+async function getReservasibynameandTanggalandLapangan(props){
+    try {
+        let dateTomorrow = new Date(props.date.getTime() + 24 * 60 * 60 * 1000);
+        props.date = props.date.getFullYear()+"-"+(props.date.getMonth()+1)+"-"+props.date.getDate()+"T"+props.date.getHours()+":"+props.date.getMinutes()+":"+props.date.getSeconds();
+        dateTomorrow = dateTomorrow.getFullYear()+"-"+(dateTomorrow.getMonth()+1)+"-"+dateTomorrow.getDate()+"T00:00:00";
+        const{data , error} = await supabase
+        .from("reservasilapangan")
+        .select()
+        .match({
+            "namaPemesan": props.namaPemesan,
+            "lapanganId":props.lapanganId
+        })
+        .gte('scheduleBookingStart',props.date)
+        .lte('scheduleBookingStart',dateTomorrow);
+        return data;
+    } catch (error) {   
+        console.log("gagal");
+    }
+}async function updateReservasi(props){
+    try {
+        props.scheduleBookingStart = props.scheduleBookingStart.getFullYear()+"-"+(props.scheduleBookingStart.getMonth()+1)+"-"+props.scheduleBookingStart.getDate()+"T"+props.scheduleBookingStart.getHours()+":"+props.scheduleBookingStart.getMinutes()+":"+props.scheduleBookingStart.getSeconds();
+        props.scheduleBookingEnd = props.scheduleBookingEnd.getFullYear()+"-"+(props.scheduleBookingEnd.getMonth()+1)+"-"+props.scheduleBookingEnd.getDate()+"T"+props.scheduleBookingEnd.getHours()+":"+props.scheduleBookingEnd.getMinutes()+":"+props.scheduleBookingEnd.getSeconds();
+        const [data,error] = await supabase
+        .from ("reservasi")
+        .update({
+            "scheduleBookingStart": props.scheduleBookingStart,
+            "scheduleBookingEnd" : props.scheduleBookingEnd,
+            "totalHarga": props.totalHarga,
+            "lapanganId": props.lapanganId
+        })
+        .eq("id",props.id);
+    } catch (error) {
+        console.log("gagal");
+    }
+}
+
+
 
 module.exports = {
     supabase,
@@ -156,5 +288,16 @@ module.exports = {
     getKetersediaan,
     tes,
     imageLapangan,
-    getAllLapangan
+    getAllLapangan,
+    getNomorLapangan,
+    createReservasi,
+    getAllReservasi,
+    getReservasibyName,
+    getReservasibyLapangan,
+    getReservasibyTanggal,
+    getReservasibyNameandLapangan,
+    getReservasibyNameandTanggal,
+    getReservasibyTanggalandLapangan,
+    getReservasibynameandTanggalandLapangan,
+    updateReservasi
 };

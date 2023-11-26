@@ -6,7 +6,7 @@ import Ketersediaan from './pages/Ketersediaan';
 function App() {
   return (
     <div className="App">
-      <Ketersediaan />
+      <Ketersediaan kondisi="online" />
       {/* <ReservasiOngoing /> */}
     </div>
   );

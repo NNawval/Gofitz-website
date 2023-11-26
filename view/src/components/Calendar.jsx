@@ -47,12 +47,16 @@ function Calendar(props) {
     setTanggal2(tanggal2, (new Date(new Date().getTime() + 24 * 60 * 60 * 1000).getMonth() + 1))
 
     return (
-        <div className="container">
-            <div className="row justify-content-center gap-4">
-                <CalendarSatuan month={new Date(new Date().getTime() + 24 * 60 * 60 * 1000).getMonth()} year={new Date(new Date().getTime() + 24 * 60 * 60 * 1000).getFullYear()} tanggal={tanggal1} ubahTanggal={props.ubahTanggal} ubahHarga={props.ubahHarga} ubahHargaTotal={props.ubahHargaTotal} reservasi={props.reservasi} jam={props.jam} lapangan={props.lapangan} />
-                <CalendarSatuan month={new Date(new Date(new Date().getTime() + 24 * 60 * 60 * 1000).getFullYear(), (new Date(new Date().getTime() + 24 * 60 * 60 * 1000).getMonth() + 1)).getMonth()} year={new Date(new Date(new Date().getTime() + 24 * 60 * 60 * 1000).getFullYear(), (new Date(new Date().getTime() + 24 * 60 * 60 * 1000).getMonth() + 1)).getFullYear()} tanggal={tanggal2} ubahTanggal={props.ubahTanggal} ubahHarga={props.ubahHarga} ubahHargaTotal={props.ubahHargaTotal} reservasi={props.reservasi} jam={props.jam} lapangan={props.lapangan} />
+        <>
+            <h3 className="text-start m-0">Pilih tanggal reservasi</h3>
+            <div className="container">
+                <div className="row justify-content-center gap-4">
+                    <CalendarSatuan month={new Date(new Date().getTime() + 24 * 60 * 60 * 1000).getMonth()} year={new Date(new Date().getTime() + 24 * 60 * 60 * 1000).getFullYear()} tanggal={tanggal1} ubahTanggal={props.ubahTanggal} ubahHarga={props.ubahHarga} ubahHargaTotal={props.ubahHargaTotal} reservasi={props.reservasi} jam={props.jam} lapangan={props.lapangan} ketersediaan={props.ketersediaan} waktuKosong={props.waktuKosong} getKetersediaan={props.getKetersediaan} setWaktuKosong={props.setWaktuKosong} ubahWaktuKosong={props.ubahWaktuKosong} isReserved={props.isReserved} time={props.time} setCanPesan={props.setCanPesan} checkKetersediaan={props.checkKetersediaan} />
+                    <CalendarSatuan month={new Date(new Date(new Date().getTime() + 24 * 60 * 60 * 1000).getFullYear(), (new Date(new Date().getTime() + 24 * 60 * 60 * 1000).getMonth() + 1)).getMonth()} year={new Date(new Date(new Date().getTime() + 24 * 60 * 60 * 1000).getFullYear(), (new Date(new Date().getTime() + 24 * 60 * 60 * 1000).getMonth() + 1)).getFullYear()} tanggal={tanggal2} ubahTanggal={props.ubahTanggal} ubahHarga={props.ubahHarga} ubahHargaTotal={props.ubahHargaTotal} reservasi={props.reservasi} jam={props.jam} lapangan={props.lapangan} ketersediaan={props.ketersediaan} waktuKosong={props.waktuKosong} getKetersediaan={props.getKetersediaan} setWaktuKosong={props.setWaktuKosong} ubahWaktuKosong={props.ubahWaktuKosong} isReserved={props.isReserved} time={props.time} setCanPesan={props.setCanPesan} checkKetersediaan={props.checkKetersediaan} />
+                </div>
             </div>
-        </div>
+            <hr className="m-0" />
+        </>
     );
 }
 
