@@ -1,7 +1,7 @@
 import React from "react";
-import Tanggal from "./Tanggal";
+import TanggalUbah from "./TanggalUbah";
 
-function CalendarSatuan(props) {
+function CalendarSatuanUbah(props) {
     return (
         <div className="w-calendar col-6">
             <p className="text-bg-success rounded-pill">
@@ -17,10 +17,10 @@ function CalendarSatuan(props) {
                 <p className="m-0 tanggal size-hari">Sa</p>
             </div>
             <div className="row row-cols-auto">
-                {props.tanggal.map(x => <Tanggal key={x[0]} month={props.month} year={props.year} status={x} ubahTanggal={props.ubahTanggal} ubahHarga={props.ubahHarga} ubahHargaTotal={props.ubahHargaTotal} reservasi={props.reservasi} jam={props.jam} lapangan={props.lapangan} ketersediaan={props.ketersediaan} waktuKosong={props.waktuKosong} getKetersediaan={props.getKetersediaan} setWaktuKosong={props.setWaktuKosong} ubahWaktuKosong={props.ubahWaktuKosong} isReserved={props.isReserved} time={props.time} setCanPesan={props.setCanPesan} checkKetersediaan={props.checkKetersediaan} />)}
+                {props.tanggal.map(x => <TanggalUbah key={x[0]} month={props.month} year={props.year} status={x} ubahTanggal={props.ubahTanggal} />)}
             </div>
         </div>
     );
 }
 
-export default CalendarSatuan;
+export default CalendarSatuanUbah;

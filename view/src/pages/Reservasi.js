@@ -1,6 +1,6 @@
 import React from "react";
 import DetailPesanan from "../components/DetailPesanan";
-import Form from "../components/Form";
+import FormReserve from "../components/FormReserve";
 import Footer from "../components/Footer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
@@ -8,7 +8,6 @@ import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 
 
 function Reservasi(props) {
-
   return (
     <>
         <header className="d-lg-block d-none py-3 border-bottom text-start">
@@ -25,10 +24,10 @@ function Reservasi(props) {
             <div className="row justify-content-between mx-0 mx-lg-5">
                 
                 <div className="col-12 col-lg-5 order-lg-3">
-                    <DetailPesanan lapangan={props.lapangan}/>
+                    <DetailPesanan lapangan={props.lapangan} harga={200000} totalHarga={400000} durasi={2}/>
                 </div>
                 <div className="p-0 col-lg-6 col-12">
-                    <Form online={props.online}/>
+                    <FormReserve online={props.online} totalHarga={400000} lapangan={props.lapangan}/>
                 </div>
             </div>
         </div>
