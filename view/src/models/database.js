@@ -317,7 +317,8 @@ async function getRole(username){
         const {data, error} =  await supabase
         .from("user")
         .select("role")
-        .eq("username",username)
+        .eq("username",username);
+        return data;
     } catch (error) {
         
     }

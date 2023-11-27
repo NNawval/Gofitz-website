@@ -7,42 +7,54 @@ import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
+import database from "../models/database";
 
 function Navbar() {
   const navigate = useNavigate();
   const [session, setSession] = useState(null);
-  const [role, setRole] = useState("admin");
+  const [role, setRole] = useState(null);
+  const [username, setUsername] = useState("null");
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session)
+      setSession(session);
+      changeRole(session);
+      // changeRole();
     })
 
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session)
+      // console.log(session.user.user_metadata.username);
+      setSession(session);
+      changeRole(session);
     })
-
+    // console.log(session);
+    // console.log(supabase.auth.getSession())
+    // changeRole(session);
+    
     return () => subscription.unsubscribe()
   }, [])
+
+  async function changeRole(session) {
+    if (session) {
+      setUsername(session.user.user_metadata.username);
+      let data = await database.getRole(session.user.user_metadata.username);
+      setRole(data[0].role);
+    } else {
+      setUsername("");
+      setRole("customer")
+    }
+  }
   
   async function handleLogout(){
     // sessionStorage.removeItem('token')
     await supabase.auth.signOut();
     navigate("/");
-    
     // dibutton ntar pas onClick={handleLogout}
   }
 
-  if (session) {
-
-  }
-
-  function toOnSite() {
-    navigate("/ketersediaan-onsite");
-  }
-
+  // console.log(supabase.auth.getSession())
   return (
     <header className="px-5 d-flex flex-wrap align-items-center justify-content-between border-bottom" style={{height:"10vh"}}>
       <div className="w-25 mb-0">
@@ -86,12 +98,12 @@ function Navbar() {
         :
         <div className="w-25 d-block justify-content-end d-flex">
           <button className="m-0 text-end border-0 d-flex gap-2 justify-content-center align-items-center dropdown-toggle" style={{background:"transparent"}} type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <div className=" m-0 p-2 px-3 border border-2 border-success rounded-circle" >P</div>
+            <div className=" m-0 p-2 px-3 border border-2 border-success rounded-circle" >{username.slice(0,1).toUpperCase()}</div>
             {/* <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" className="rounded-circle" /> */}
             
           </button>
           <ul className="dropdown-menu" >
-            <li><span className="dropdown-item">fajrimgfr</span></li>
+            <li><span className="dropdown-item">{username}</span></li>
             <li><Link to="/ketersediaan" className="dropdown-item d-lg-none">Reservasi</Link></li>
             <li><Link to="/ketersediaan-onsite" className={role === "admin" ? "dropdown-item d-lg-none" : "d-none"}>Reservasi Onsite</Link></li>
             <li><Link to="/ubah-reservasi" className={role === "admin" ? "dropdown-item d-lg-none" : "d-none"}>Ubah Reservasi</Link></li>
