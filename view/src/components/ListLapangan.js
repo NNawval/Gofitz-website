@@ -1,21 +1,18 @@
-
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { createClient } from "@supabase/supabase-js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFutbol, faMoneyBillWave, faGear, faTrash, faRulerCombined, faPlus } from "@fortawesome/free-solid-svg-icons";
-const supabaseUrl = "https://rrdwyabynnlseyxhwqqx.supabase.co"
+import database from "../models/database"
 
 
-const supabase = createClient(supabaseUrl, 
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJyZHd5YWJ5bm5sc2V5eGh3cXF4Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcwMDEyMzY4NSwiZXhwIjoyMDE1Njk5Njg1fQ.0Zr2CpFSv0oKVj_0YE5OuNsIkgykZEJdH6I7aVhVJgA")
+
 
 
 function ListLapangan() {
     const [lapangan, setLapangan] = useState([]);
+    const [showAlert, setShowAlert] = useState(false);
 
     useEffect(() => {
         fetchLapangan()
@@ -24,29 +21,84 @@ function ListLapangan() {
      
     const navigate = useNavigate();
       async function fetchLapangan(){
-        const {data} = await supabase
+        const {data} = await database.supabase
           .from('lapangan')
           .select()
-          setLapangan(data)
+          await setLapangan(data)
   
       }
-      function toRupiah(num) {
-        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    }
+      async function deleteLapangan(Id) {
+        try {
+          const { data, error } = await database.supabase
+            .from('lapangan')
+            .delete()
+            .eq('nomorLapangan', Id);
+      
+          if (error) {
+            throw error;
+          }
+      
+          console.log('Lapangan deleted successfully:', data);
+          return data;
+        } catch (error) {
+          console.error('Error deleting lapangan:', error.message);
+        }
+
+      }
      
+      async function hasDataWithin30Days(id) {
+        try {
+          const today = new Date();
+          
+
+          const thirtyDaysLater = new Date();
+          thirtyDaysLater.setDate(today.getDate() + 30);
+      
+   
+          const { data, error } = await database.supabase
+            .from('reservasi') 
+            .select()
+            .eq('lapanganId', id)
+            .gte('scheduleBookingStart', today.toISOString()) 
+            .lte('scheduleBookingStart', thirtyDaysLater.toISOString()); 
+      
+          if (error) {
+            throw error;
+          }
+          console.log(data);
+          if (data && data.length > 0) {
+            document.getElementById('liveAlertPlaceholder').classList.remove("d-none");
+            setShowAlert(true);
+            console.log('Ada data dengan timestamp di antara hari ini dan 30 hari ke depan.');
+
+          } else {
+            console.log('Tidak ada data dengan timestamp di antara hari ini dan 30 hari ke depan.');
+            deleteLapangan(id);
+            navigate("/list-lapangan");
+          }
+        } catch (error) {
+          console.error('Error:', error.message);
+        }
+      }
+
+      function closeClick() {
+        document.getElementById('liveAlertPlaceholder').classList.add("d-none");
+      }
+
 
     return (
-      <>
+      <div>
       <Navbar />
-      <div className="">
-      <h1 className="text-center mt-5">DATA LAPANGAN</h1>
+      <div className="mb-4" style={{minHeight:"73vh"}}>
+      <h1 className="text-center mt-4">DATA LAPANGAN</h1>
       <div className="container w-75">
         <div></div>
-        <div className="mt-5 mb-3">
+        <div className="mt-4 mb-3">
         <button onClick={() => navigate('/add-lapangan')} type="button" class="btn btn-success btn-lg"> <FontAwesomeIcon icon={faPlus} style={{color: "#ffffff",}} /> Tambah Lapangan</button>
         </div>
+        <div id="liveAlertPlaceholder" className="d-none alert alert-danger alert-dismissible show" role="alert"><div>Masih ada reservasi yang terdaftar di lapangan tersebut.</div><button onClick={closeClick} type="button" className="btn-close"></button></div>
         <div className="row">
-            <div className="col-lg-10 col-12 d-flex flex-column gap-4 mt-4">
+            <div className="col-12 d-flex flex-column gap-4 mt-2">
               {lapangan.map((x) => 
               <div className="row mb-0">
               <div className="col-md-12">
@@ -61,13 +113,13 @@ function ListLapangan() {
                           <h3 className="mb-0">{x.namaLapangan}</h3>
                           </div>
                           <div className="col-4 text-end"> 
-                          <button onClick={()=> navigate(`edit-lapangan/${x.id}`)}   type="button" class="btn btn-outline-light" >
+                          <button onClick={()=> navigate(`edit-lapangan/${x.id}`)}   type="button" class="btn btn-outline-light" data-testid="Edit">
                             
                           <FontAwesomeIcon icon={faGear} style={{color: "#6a6d71",}} />
                           </button>
                           </div>
                           <div className="col-1 text-end">
-                          <button type="button" class="btn btn-outline-light">
+                          <button onClick={()=>hasDataWithin30Days(x.nomorLapangan)}type="button" class="btn btn-outline-light" data-testid="Delete">
                           <FontAwesomeIcon icon={faTrash} style={{color: "#d31717",}} />
                           </button> 
 
@@ -77,8 +129,8 @@ function ListLapangan() {
                               <div className="mb-1 text-body-secondary">{<FontAwesomeIcon icon={faFutbol} />} {x.countBola} <small className="text-body-secondary fw-light"> bola</small></div>
                 
                           </div>
-                          <p className="card-text mb-auto">{<FontAwesomeIcon icon={faMoneyBillWave} />}<b> Weekday: {"Rp" + x.priceLapanganWeekend}</b><small className="text-body-secondary fw-light"> / jam</small></p>
-                          <p className="card-text mb-auto">{<FontAwesomeIcon icon={faMoneyBillWave} />}<b> Weekend: {"Rp" + x.priceLapanganWeekday}</b><small className="text-body-secondary fw-light"> / jam</small></p>
+                          <p className="card-text mb-auto">{<FontAwesomeIcon icon={faMoneyBillWave} />}<b> Weekday: {"Rp" + x.priceLapanganWeekend.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</b><small className="text-body-secondary fw-light"> / jam</small></p>
+                          <p className="card-text mb-auto">{<FontAwesomeIcon icon={faMoneyBillWave} />}<b> Weekend: {"Rp" + x.priceLapanganWeekday.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</b><small className="text-body-secondary fw-light"> / jam</small></p>
                       </div>
                   </div>
               </div>
@@ -88,7 +140,8 @@ function ListLapangan() {
             </div>
       </div>
 </div>
-    </>
+  <Footer />
+    </div>
 
     );
 }

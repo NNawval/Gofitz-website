@@ -6,10 +6,11 @@ import DashboardOwner from './pages/DashboardOwner';
 import AddLapangan from './components/AddLapangan';
 import ListLapangan from './components/ListLapangan';
 import EditLapangan from './components/EditLapangan';
-import Navbar from './components/Navbar';
 import ReservasiOngoing from './pages/ReservasiOngoing';
 import Reservasi from './pages/Reservasi';
 import Home from './pages/Home';
+import Footer from './components/Footer';
+import Navbar from './components/Navbar';
 
 // import ReservasiOngoing from './pages/ReservasiOngoing';
 
@@ -30,6 +31,7 @@ function App() {
         <Route path="reservasi-onsite" element={<Reservasi online={false} />}/>
       </Routes>
     </BrowserRouter>
+
   );
 }
 

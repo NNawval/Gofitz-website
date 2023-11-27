@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { createClient } from "@supabase/supabase-js";
 import Navbar from "../components/Navbar";
 import { Container, Form, Button, Row, Col, Image } from 'react-bootstrap';
+import Footer from "./Footer";
 const supabaseUrl = "https://rrdwyabynnlseyxhwqqx.supabase.co"
 
 
@@ -117,7 +118,7 @@ const AddLapangan = () => {
     <Navbar />
     <div className="containter-fluid p-0">
       
-      <h1 className="text-center mt-5">EDIT LAPANGAN</h1>
+      <h1 className="text-center mt-4">EDIT LAPANGAN</h1>
       <div className="container w-75 text-start mt-5 mb-4">
         <form onSubmit={save}>
           <div className="mb-3">
@@ -205,7 +206,7 @@ const AddLapangan = () => {
           {error?
                <label className="text-danger">Isi semua data</label>:""}
           <div className="mt-4 gap-2">
-            <button onClick={() => navigate(-1)} className="btn btn-danger">
+            <button onClick={() => navigate(-1)} className="btn me-3 btn-danger">
               Cancel
             </button>
             <button type="submit" className="btn btn-success">
@@ -215,6 +216,7 @@ const AddLapangan = () => {
         </form>
       </div>
     </div>
+    <Footer />
     </>
   );
 };

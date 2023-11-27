@@ -14,6 +14,7 @@ import {
   PointElement,
   LineElement
 } from 'chart.js'
+import Footer from "../components/Footer";
 
 ChartJS.register(
   LineElement,
@@ -150,7 +151,7 @@ if (orderCounts!=null){
   return (
     <>
     <Navbar />
-    <div className='container'>
+    <div className='container mb-5'>
       
       <div class="container w-75 px-10 mt-5">
         <div class="row gx-20" >
@@ -217,6 +218,7 @@ if (orderCounts!=null){
       </div>
 
     </div>
+    <Footer />
     </>
   );
 }

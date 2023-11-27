@@ -143,15 +143,15 @@ function ReservasiOngoing(){
     return(
         <>
             <Navbar />
-            <div className="container w-75" style={{minHeight:"100vh"}}>
+            <div className="container w-75" style={{minHeight:"78vh"}}>
                 <div className="container shadow border rounded my-3 px-3 pt-3 pb-2">
                     <div className="container mb-3">
-                        <div className="row">
-                            <div className="col-5 p-1 border rounded text-start d-flex align-items-center">
+                        <div className="row justify-content-between">
+                            <div className="col-6 p-1 border rounded text-start d-flex align-items-center">
                                 <FontAwesomeIcon className="text-secondary mx-3" icon={faMagnifyingGlass} />
                                 <input onChange={ubahNama}  className="border-0 d-block w-100" type="word" name="nama" placeholder="Nama" style={{outline:"none"}} />                        
                             </div>
-                            <div className="col-4">
+                            <div className="col-5">
                                 <button className="px-3 style-dropdown text-start btn w-100 border rounded" type="button" data-bs-toggle="dropdown" >
                                     <div className="m-0 p-0 d-flex justify-content-between align-items-center">
                                         <p className="m-0">{lapangan}</p>
@@ -167,7 +167,7 @@ function ReservasiOngoing(){
                                     )}
                                     </ul>
                             </div>
-                            <div className="col-3 p-0">
+                            {/* <div className="col-3 p-0">
                                 <button className="text-start style-dropdown btn w-100 border rounded px-3" type="button" data-bs-toggle="dropdown" >
                                     <div className="m-0 p-0 d-flex align-items-center">
                                         <FontAwesomeIcon className="icon-size me-3" icon={faCalendar} />
@@ -180,7 +180,7 @@ function ReservasiOngoing(){
                                 <ul className="dropdown-menu text-center p-4">
                                     <Calendar ubahTanggal={setTanggal} />
                                 </ul>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                         {/* {list = ListReservasiDb}

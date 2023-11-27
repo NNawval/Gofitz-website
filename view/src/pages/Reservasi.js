@@ -11,12 +11,12 @@ function Reservasi(props) {
 
   return (
     <>
-        <header className="d-lg-block d-none py-3 border-bottom text-start">
+        <header className="d-lg-block d-none py-3 border-bottom text-start" style={{height:"10vh"}}>
             <Link to="/" className="ms-5 link-body-emphasis text-decoration-none">
                 <span className="badge bg-success fs-5">GOFITZ</span>
             </Link>
         </header>
-        <div className="container-fluid container-lg mt-3 p-0 mb-5">
+        <div className="container-fluid container-lg mt-3 pt-3 p-0 mb-5"style={{minHeight:"70vh"}}>
             <div className="d-flex align-items-center gap-3 justify-content-between justify-content-lg-start">
                 <Link to={props.online ? "/ketersediaan" : "/ketersediaan-onsite"}>
                     <button style={{width: "40px", height:"40px", background:"transparent", border:"none"}}><FontAwesomeIcon className="icon-size" icon={faChevronLeft} /></button>

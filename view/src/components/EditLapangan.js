@@ -6,6 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { createClient } from "@supabase/supabase-js";
 import Navbar from "../components/Navbar";
 import { Container, Form, Button, Row, Image, Card } from 'react-bootstrap';
+import Footer from "./Footer";
 const supabaseUrl = "https://rrdwyabynnlseyxhwqqx.supabase.co"
 
 
@@ -23,7 +24,6 @@ const EditLapangan = () => {
   const { id } = useParams();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-
   async function fetchLapangan(Id) {
 
 
@@ -209,7 +209,7 @@ const EditLapangan = () => {
     <>
     <Navbar />
     <div className="containter-fluid p-0">
-      <h1 className="text-center mt-5">EDIT LAPANGAN</h1>
+      <h1 className="text-center mt-4">EDIT LAPANGAN</h1>
       <div className="container w-75 text-start mt-5 mb-4">
         {loading ? (
           <p>Loading...</p>
@@ -312,7 +312,7 @@ const EditLapangan = () => {
 {error?
                <label className="text-danger">Isi semua data</label>:""}
             <div className="mt-4 gap-2">
-              <button onClick={() => navigate(-1)} className="btn btn-danger">
+              <button onClick={() => navigate(-1)} className="btn me-3 btn-danger">
                 Cancel
               </button>
               <button type="submit" className="btn btn-success">
@@ -325,6 +325,7 @@ const EditLapangan = () => {
         )}
       </div>
     </div>
+    <Footer />
     </>
   );
 };
