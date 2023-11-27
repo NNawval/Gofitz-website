@@ -7,9 +7,7 @@ function Register() {
     username:"",email:"",password:"",
   })
 
-  // console.log(formData)
-
-  function handleChange(event){
+  async function handleChange(event){
     if (event.target.id === "floatingUsername") {
       setFormData({username:event.target.value, email:formData.email, password: formData.password})
     } else if (event.target.id === "floatingEmail") {
@@ -22,24 +20,40 @@ function Register() {
 
   async function handleSubmit(e){
     e.preventDefault()
-
-    try {
-      const { data, error } = await supabase.auth.signUp(
-        {
-          email: formData.email,
-          password: formData.password,
-          options: {
-            data: {
-              username: formData.username, 
+    if(formData.username !== "" && formData.email  !== "" && formData.password !== ""){
+      const {data, error} = await supabase
+      .from("user")
+      .select("username")
+      .eq("username", formData.username);
+      if(data.length !== 0){
+        alert("Username sudah terpakai, silahkan pilih yang lain!");
+      }
+      else{
+        try {
+          const { data, error } = await supabase.auth.signUp(
+            {
+              email: formData.email,
+              password: formData.password,
+              options: {
+                data: {
+                  username: formData.username, 
+                }
+              }
             }
-          }
+          )
+          if (error) throw error
+          alert("Silahkan cek email kamu untuk verifikasi");
+          const {data1, error2} = await supabase
+          .from("user")
+          .update({"username": formData.username})
+          .eq("email", formData.email);
+        } catch (error) {
+          alert(error)
         }
-      )
-      if (error) throw error
-      alert("Check your email for verification link")
-
-    } catch (error) {
-      alert(error)
+      }
+    }
+    else{
+      alert("Silahkan isi semua data!");
     }
   }
 
@@ -68,7 +82,7 @@ function Register() {
                 <label htmlFor="floatingPassword">Password</label>
               </div>
               <button className="w-100 mb-2 btn btn-lg rounded-3 btn-success" type="submit">Sign-up</button>
-              <small className="text-body-secondary">By clicking Sign up, you agree to the terms of use.</small>
+              <small className="text-body-secondary">Klik Sign-up untuk membuat akun GOFITZ</small>
             </form>
           </div>
         </div>

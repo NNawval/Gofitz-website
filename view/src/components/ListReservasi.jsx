@@ -9,8 +9,8 @@ function ListReservasi(props){
     let b = a.toLocaleDateString('id', {weekday: 'long',year: 'numeric',month: 'long',day: 'numeric'});
     let d = a.toTimeString().split(" ")[0]+"-"+c.toTimeString().split(" ")[0];
     return(
-        <div className="text-start container">
-            <div class="card shadow">
+        <div className="text-start container mb-3">
+            <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center gap-2">
                     <div className="d-flex align-items-center gap-2">
                         <p className="badge bg-success m-0">Lapangan {props.lapangan}</p>
@@ -34,9 +34,10 @@ function ListReservasi(props){
                                     </div>
                                 </div>
                                 <div className="row">
-                                    <Link to="/ketersediaan-ubah-reservasi" state={{id:props.id, idLapangan:props.lapangan, totalHarga:props.harga, scheduleBookingStart:props.scheduleBookingStart, scheduleBookingEnd:props.scheduleBookingEnd}}>
-                                        <button className="btn btn-outline-success w-25 align-self-end col-4 offset-8 mt-3">Ubah</button>
-                                    </Link>
+                                  <Link to="/ketersediaan-ubah-reservasi" state={{id:props.id, idLapangan:props.lapangan, totalHarga:props.harga, scheduleBookingStart:props.scheduleBookingStart, scheduleBookingEnd:props.scheduleBookingEnd}}>
+
+                                    <button className="btn btn-outline-success w-25 align-self-end col-4 offset-8 mt-3">Ubah</button>
+                                  </Link>
                                 </div>
                             </div>                            
                         </div>

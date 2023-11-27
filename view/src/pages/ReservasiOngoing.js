@@ -19,13 +19,13 @@ function ReservasiOngoing(){
     //     // console.log(data);
     //     // // data.map((el) => <ListReservasi reservasi = {el} />);
     // }  
-    let lapanganAwal = "Lapangan";     
+    // let lapanganAwal = "Lapangan";     
     const [nama, setNama] = React.useState({nama:""});
     const [tanggal, setTanggal] = React.useState("Pilih Tanggal Reservasi");
-    const [lapangan, setLapangan] = React.useState(lapanganAwal);
+    const [lapangan, setLapangan] = React.useState("Pilih lapangan");
     const [listLapangan , setListLapangan ] = React.useState([]);
     const [ListReservasiDb, setListReservasi] = React.useState([]);
-
+    const [dateData,setDate] = React.useState(new Date(new Date().getTime() + 24*3600*1000))
     let list = ListReservasiDb;
     // const [input, setInput] = React.useState({
     //     "nama": "",
@@ -36,9 +36,13 @@ function ReservasiOngoing(){
 
     useEffect (()=>{
         getDataListLapangan();
-        getDataListReservasiAwal();
+        fetchData();
     }, []);
 
+    async function getDatareservasibyDate(){
+        let data = await database.getReservasibyTanggal(new Date(tanggal));
+        setListReservasi(data);
+    }
 
     async function getDataListLapangan(){
         let data = await database.getNomorLapangan();
@@ -49,6 +53,63 @@ function ReservasiOngoing(){
         let data = await database.getAllReservasi();
         setListReservasi(data);
     }
+
+    async function fetchData() {
+        try {
+            let a= dateData.getFullYear()+"-"+(dateData.getMonth()+1)+"-"+dateData.getDate()+"T00:00:00";
+            const { data: reservasiData, error: reservasiError } = await database.supabase
+            .from("reservasi")
+            .select(
+              "id, namaPemesan, lapanganId, scheduleBookingStart, scheduleBookingEnd, totalHarga, ssPayment"
+            )
+            .gte("scheduleBookingStart",a)
+            .order("scheduleBookingStart");
+    
+          if (reservasiError) {
+            throw reservasiError;
+          }
+    
+          const lapanganIds = reservasiData.map((item) => item.lapanganId);
+    
+          const { data: lapanganData, error: lapanganError } = await database.supabase
+            .from("lapangan")
+            .select("nomorLapangan, imageSrc, namaLapangan")
+            .in("nomorLapangan", lapanganIds);
+
+    
+          if (lapanganError) {
+            throw lapanganError;
+          }
+
+    
+          const combinedData = reservasiData.map((reservasiItem) => {
+            const matchingLapangan = lapanganData.find(
+              (lapanganItem) => lapanganItem.nomorLapangan === reservasiItem.lapanganId
+            );
+    
+            return {
+              ...reservasiItem,
+              lapangan: matchingLapangan,
+            };
+          });
+    
+          console.log(combinedData);
+          const mappedArray = combinedData?.map((x) => ({
+            id: x.id,
+            namaPemesan: x.namaPemesan,
+            nomorLapangan: x.lapangan?.nomorLapangan,
+            scheduleBookingStart: x.scheduleBookingStart,
+            scheduleBookingEnd: x.scheduleBookingEnd,
+            totalHarga: x.totalHarga,
+            ssPayment: x.ssPayment,
+            imageSrc: x.lapangan?.imageSrc,
+          }));
+          console.log(mappedArray);
+          setListReservasi( mappedArray);
+        } catch (error) {
+          console.log("Error fetching data:", error.message);
+        }
+      }
 
 
     function clickLapangan(event) {
@@ -74,11 +135,16 @@ function ReservasiOngoing(){
         // getDataListReservasi(input);
     }
 
+    function settanggalHandler(){
+
+    }
+
+
     return(
         <>
             <Navbar />
             <div className="container w-75" style={{minHeight:"100vh"}}>
-                <div className="container border rounded my-3 p-3">
+                <div className="container shadow border rounded my-3 px-3 pt-3 pb-2">
                     <div className="container mb-3">
                         <div className="row">
                             <div className="col-5 p-1 border rounded text-start d-flex align-items-center">
@@ -105,7 +171,10 @@ function ReservasiOngoing(){
                                 <button className="text-start style-dropdown btn w-100 border rounded px-3" type="button" data-bs-toggle="dropdown" >
                                     <div className="m-0 p-0 d-flex align-items-center">
                                         <FontAwesomeIcon className="icon-size me-3" icon={faCalendar} />
-                                        <p className="m-0">{tanggal === "Pilih Tanggal Reservasi" ? tanggal : tanggal.toLocaleDateString('id', {weekday: 'long',year: 'numeric',month: 'long',day: 'numeric'})}</p>
+                                        <p className="m-0">{tanggal === "Pilih Tanggal Reservasi" ? tanggal 
+                                        : 
+                                        (tanggal.toLocaleDateString('id', {weekday: 'long',year: 'numeric',month: 'long',day: 'numeric'})
+                                        )}</p>
                                     </div>
                                 </button>
                                 <ul className="dropdown-menu text-center p-4">
@@ -114,15 +183,48 @@ function ReservasiOngoing(){
                             </div>
                         </div>
                     </div>
-                        {/* {ListReservasiDb.data.length === 0 ? <></> : ListReservasiDb.data.map((x)=> <ListReservasi imageSrc={x.imageSrc} lapangan= {x.lapanganId} harga = {x.totalHarga} nama ={x.namaPemesan} namaLapangan={x.namaLapangan} scheduleBookingStart={x.scheduleBookingStart} scheduleBookingEnd={x.scheduleBookingEnd}/> )} */}
-                        {ListReservasiDb
+                        {/* {list = ListReservasiDb}
+                        {list.map((x)=>{
+                            
+                        })
+                        } */}
+                        {console.log(tanggal)}
+                        {
+                        ((lapangan === "Pilih lapangan" ) ? 
+                        (ListReservasiDb
                         .filter((x)=>{
                             return (nama.nama === "" || nama.nama === " ") ? x : x.namaPemesan.includes(nama.nama);
-                        }).filter((x)=>{
-                            return  lapangan === lapanganAwal ? x : ( x.nomorLapangan === parseInt(lapangan.split(" ")[1])) ;
-                        }) 
+                        }) ==0 ?
+                            <p className="text-center">not found.</p>
+                            :
+                            ListReservasiDb
+                            .filter((x)=>{
+                                return (nama.nama === "" || nama.nama === " ") ? x : x.namaPemesan.includes(nama.nama);
+                            }).map((x) => 
+                                <ListReservasi id={x.id} imageSrc={x.imageSrc} lapangan= {x.nomorLapangan} harga = {x.totalHarga} nama ={x.namaPemesan} namaLapangan={x.namaLapangan} scheduleBookingStart={x.scheduleBookingStart} scheduleBookingEnd={x.scheduleBookingEnd}/> )) 
+                        :
+                        (ListReservasiDb
+                        .filter((x)=> x.nomorLapangan === parseInt(lapangan.split(" ")[1]))
+                        .filter((x)=>{
+                            return (nama.nama === "" || nama.nama === " ") ? x : x.namaPemesan.includes(nama.nama);
+                        }) == 0 ?
+                        <p className="text-center">not found.</p>                          
+                        :
+                        ListReservasiDb
+                        .filter((x)=> x.nomorLapangan === parseInt(lapangan.split(" ")[1]))
+                        .filter((x)=>{
+                            return (nama.nama === "" || nama.nama === " ") ? x : x.namaPemesan.includes(nama.nama);
+                        }).map((x) => 
+                        <ListReservasi id={x.id} imageSrc={x.imageSrc} lapangan= {x.nomorLapangan} harga = {x.totalHarga} nama ={x.namaPemesan} namaLapangan={x.namaLapangan} scheduleBookingStart={x.scheduleBookingStart} scheduleBookingEnd={x.scheduleBookingEnd}/> ) ))
+                        }
+
+
+                        {/* {ListReservasiDb
+                        .filter((x)=>{
+                            return (nama.nama === "" || nama.nama === " ") ? x : x.namaPemesan.includes(nama.nama);
+                        })
                         .map((x) => 
-                        <ListReservasi id={x.id} imageSrc={x.imageSrc} lapangan= {x.lapanganId} harga = {x.totalHarga} nama ={x.namaPemesan} namaLapangan={x.namaLapangan} scheduleBookingStart={x.scheduleBookingStart} scheduleBookingEnd={x.scheduleBookingEnd}/> )}
+                        <ListReservasi id={x.id} imageSrc={x.imageSrc} lapangan= {x.nomorLapangan} harga = {x.totalHarga} nama ={x.namaPemesan} namaLapangan={x.namaLapangan} scheduleBookingStart={x.scheduleBookingStart} scheduleBookingEnd={x.scheduleBookingEnd}/> )} */}
                 </div>
             </div>
             <Footer/>
@@ -131,3 +233,7 @@ function ReservasiOngoing(){
 }
 
 export default ReservasiOngoing;
+
+
+// .filter((x)=>{
+//     return  lapangan === lapanganAwal ? x : ( x.nomorLapangan ==

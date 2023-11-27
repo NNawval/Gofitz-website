@@ -43,7 +43,7 @@ function ListLapangan() {
       <div className="container w-75">
         <div></div>
         <div className="mt-5 mb-3">
-        <button onClick={() => navigate('/AddLapangan')} type="button" class="btn btn-success btn-lg"> <FontAwesomeIcon icon={faPlus} style={{color: "#ffffff",}} /> Tambah Lapangan</button>
+        <button onClick={() => navigate('/add-lapangan')} type="button" class="btn btn-success btn-lg"> <FontAwesomeIcon icon={faPlus} style={{color: "#ffffff",}} /> Tambah Lapangan</button>
         </div>
         <div className="row">
             <div className="col-lg-10 col-12 d-flex flex-column gap-4 mt-4">
@@ -61,7 +61,7 @@ function ListLapangan() {
                           <h3 className="mb-0">{x.namaLapangan}</h3>
                           </div>
                           <div className="col-4 text-end"> 
-                          <button onClick={()=> navigate(`EditLapangan/${x.id}`)}   type="button" class="btn btn-outline-light" >
+                          <button onClick={()=> navigate(`edit-lapangan/${x.id}`)}   type="button" class="btn btn-outline-light" >
                             
                           <FontAwesomeIcon icon={faGear} style={{color: "#6a6d71",}} />
                           </button>

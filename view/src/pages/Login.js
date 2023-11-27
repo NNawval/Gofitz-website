@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { supabase } from '../models/database';
+import { useNavigate } from "react-router-dom";
 
 function Login() {
+  const navigate = useNavigate();
 
   const [formData,setFormData] = useState({
     email:"",password:"",
   })
-
-  // console.log(formData)
 
   function handleChange(event){
     if (event.target.id === "floatingEmail") {
@@ -16,10 +16,6 @@ function Login() {
       setFormData({email:formData.email, password: event.target.value})
     }
 
-  }
-
-  function handleLogout(){
-    
   }
 
   async function handleSubmit(e){
@@ -31,11 +27,12 @@ function Login() {
         password: formData.password,
       })
       if (error) throw error
-      console.log(data)
+      // console.log(data)
       alert('Login Berhasil')
-
+      // ('#modalLogin').modal('hide');
+      navigate(0);
     } catch (error) {
-      alert(error)
+      alert('Akun tidak tersedia! atau belum verifikasi email!')
     }
   }
 
@@ -59,6 +56,7 @@ function Login() {
                 <label htmlFor="floatingPassword">Password</label>
               </div>
               <button className="w-100 mb-2 btn btn-lg rounded-3 btn-success" type="submit">Log-in</button>
+              <small className="text-body-secondary">Jika Anda belum memiliki akun, silahkan melakukan Sign-Up</small>
             </form>
           </div>
         </div>

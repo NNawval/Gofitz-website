@@ -42,6 +42,7 @@ function FormReserve(props){
     }
 
     async function cekUsername(){
+      console.log(reservasi.namaPemesan);
       let data = await database.getusername( reservasi.namaPemesan);
       return data;
     }

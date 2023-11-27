@@ -1,7 +1,8 @@
 const { createClient } = require('@supabase/supabase-js');
 
 const supabaseUrl = "https://rrdwyabynnlseyxhwqqx.supabase.co";
-const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJyZHd5YWJ5bm5sc2V5eGh3cXF4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDAxMjM2ODUsImV4cCI6MjAxNTY5OTY4NX0.yWJaSdDvKABNHJCn6lZEenp4ld-I_S0ysu_VyEpcHGs";
+const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJyZHd5YWJ5bm5sc2V5eGh3cXF4Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcwMDEyMzY4NSwiZXhwIjoyMDE1Njk5Njg1fQ.0Zr2CpFSv0oKVj_0YE5OuNsIkgykZEJdH6I7aVhVJgA";
+
 
 const supabase = createClient(supabaseUrl, supabaseKey);
 
@@ -107,7 +108,8 @@ async function getNomorLapangan(){
     try {
         const{data,error} = await supabase
         .from("lapangan")
-        .select("nomorLapangan");
+        .select("nomorLapangan")
+        .order("nomorLapangan");
         return data;
     } catch (error) {
         console.log("gagal");
@@ -120,7 +122,7 @@ async function createReservasi(props){
         props.scheduleBookingEnd = props.scheduleBookingEnd.getFullYear()+"-"+(props.scheduleBookingEnd.getMonth()+1)+"-"+props.scheduleBookingEnd.getDate()+"T"+props.scheduleBookingEnd.getHours()+":"+props.scheduleBookingEnd.getMinutes()+":"+props.scheduleBookingEnd.getSeconds();
         const{data, error} = await supabase
             .from('reservasi')
-            .insert({"namaPemesan": props.namaPemesan, "lapanganId": props.lapanganId, "scheduleBookingStart": props.scheduleBookingStart, "scheduleBookingEnd": props.scheduleBookingEnd, "totalHarga": props.totalHarga, "ssPayment": "https://rrdwyabynnlseyxhwqqx.supabase.co/storage/v1/object/public/SSpayment/images/"+props.ssPayment });
+            .insert({"namaPemesan": props.namaPemesan, "lapanganId": props.lapanganId, "scheduleBookingStart": props.scheduleBookingStart, "scheduleBookingEnd": props.scheduleBookingEnd, "totalHarga": props.totalHarga, "ssPayment":props.ssPayment });
     } catch (error) {
       console.log("gagal");
     }
@@ -259,7 +261,9 @@ async function getReservasibynameandTanggalandLapangan(props){
     } catch (error) {   
         console.log("gagal");
     }
-}async function updateReservasi(props){
+}
+
+async function updateReservasi(props){
     try {
         props.scheduleBookingStart = props.scheduleBookingStart.getFullYear()+"-"+(props.scheduleBookingStart.getMonth()+1)+"-"+props.scheduleBookingStart.getDate()+"T"+props.scheduleBookingStart.getHours()+":"+props.scheduleBookingStart.getMinutes()+":"+props.scheduleBookingStart.getSeconds();
         props.scheduleBookingEnd = props.scheduleBookingEnd.getFullYear()+"-"+(props.scheduleBookingEnd.getMonth()+1)+"-"+props.scheduleBookingEnd.getDate()+"T"+props.scheduleBookingEnd.getHours()+":"+props.scheduleBookingEnd.getMinutes()+":"+props.scheduleBookingEnd.getSeconds();
@@ -277,6 +281,47 @@ async function getReservasibynameandTanggalandLapangan(props){
     }
 }
 
+async function getusername(props){
+    try {
+        const {data , error} = await supabase
+        .from ("user")
+        .select("username")
+        .eq("username",props);
+        return data;
+    } catch (error) {
+        console.log("gagal");
+    } 
+}
+
+    async function tes3(){
+        try {
+            const {data , error} = await supabase
+            .from ("reservasi")
+            .select(`id,
+            namaPemesan,
+            lapanganId,
+            scheduleBookingStar,
+            scheduleBookingEnd, 
+            totalHarga,
+            ssPayment,
+            lapangan(id,imageSrc, namaLapangan)`);
+            console.log(data);
+            return data;
+        } catch (error) {
+            console.log("gagal");
+        } 
+    }
+
+async function getRole(username){
+    try {
+        const {data, error} =  await supabase
+        .from("user")
+        .select("role")
+        .eq("username",username)
+    } catch (error) {
+        
+    }
+}
 
 
 module.exports = {
@@ -299,5 +344,8 @@ module.exports = {
     getReservasibyNameandTanggal,
     getReservasibyTanggalandLapangan,
     getReservasibynameandTanggalandLapangan,
-    updateReservasi
+    updateReservasi,
+    getusername,
+    tes3,
+    getRole
 };

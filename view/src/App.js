@@ -21,7 +21,7 @@ function App() {
         <Route path="add-lapangan" element={<AddLapangan/>}/>
         <Route path="list-lapangan" element={<ListLapangan/>}/>
         <Route path="list-lapangan/edit-lapangan/:id" element={<EditLapangan/>}/>
-        <Route path="dashboard-owner" element={<DashboardOwner/>}/>
+        <Route path="keuangan" element={<DashboardOwner/>}/>
         <Route path="ketersediaan" element={<Ketersediaan kondisi="online"/>}/>
         <Route path="ketersediaan-onsite" element={<Ketersediaan kondisi="onSite"/>}/>
         <Route path="ketersediaan-ubah-reservasi" element={<Ketersediaan kondisi="ubahReservasi"/>}/>

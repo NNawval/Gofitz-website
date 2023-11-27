@@ -17,7 +17,7 @@ function Home() {
             <div className="container-fluid d-flex flex-column justify-content-center align-items-center p-0">
                 <div className="d-flex flex-column gap-4 justify-content-center align-items-center p-0 m-0 w-100" style={{backgroundColor: "#cccccc",backgroundPosition:"center",backgroundRepeat: "no-repeat", backgroundSize:"cover",height:"90vh", backgroundImage:`linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),url(${background})` }}>
                     <h1 className="text-white w-50 text-center" style={{fontSize:"3rem"}}>Kemudahan Pemesanan, Sensasi Bermain yang Tak Terlupakan.</h1>
-                    <Link to="ketersediaan">
+                    <Link reloadDocument to="ketersediaan">
                         <button className="px-3 btn btn-success rounded-pill btn-lg">Pesan sekarang!</button>
                     </Link>
                 </div>

@@ -108,7 +108,7 @@ function KonfirmasiReservasi(props) {
 
     return (
         <>
-            <div className="container sticky-top pt-4 d-none d-lg-block">
+            <div className="container sticky-top z-0 pt-4 d-none d-lg-block">
                 <div className="card shadow">
                     <div className="card-body m-2">
                         <h1 className="card-title pricing-card-title fs-4 text-start mt-2 mb-4">Rp{toRupiah(props.harga)}<small className="fs-6 text-body-secondary fw-light"> / jam</small></h1>
