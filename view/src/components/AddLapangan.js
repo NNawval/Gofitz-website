@@ -33,8 +33,7 @@ const AddLapangan = () => {
     event.preventDefault();
     if (lapangan1.tipe==0, lapangan1.bola==0||lapangan1.size==0 ||lapangan1.weekend== 0 ||lapangan1.weekday==0 || selectedFile==null||lapangan1.nomor== 0){
       setError(true)
-      console.log("asdasdasdads")
-      console.log(lapangan1)
+
     }
     else{
       if (selectedFile) {
@@ -52,7 +51,7 @@ const AddLapangan = () => {
           } else {
             console.log('Image uploaded successfully:', data);
             createLapangan()
-            navigate('listLapangan')
+            navigate(-1)
           }
         } catch (error) {
           console.error('Error uploading image:', error.message);
