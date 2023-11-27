@@ -68,54 +68,54 @@ _Below is the list of implemented use cases including PIC and screenshot._
 
 1. UC01 Melihat data lapangan dan ketersediaannya (18221111 Pramaditya Fajri Migfar)
 
-<img src="doc/uc01part1.png" height="30" >
-<img src="doc/uc01part2.png" height="30" >
+<img src="doc/uc01part1.PNG">
+<img src="doc/uc01part2.PNG">
 
 2. UC02 Reservasi online (18221087 Willy Frans Farel Sijabat)
 
-<img src="doc/uc02part1.png" height="30" >
-<img src="doc/uc02part2.png" height="30" >
+<img src="doc/uc02part1.PNG">
+<img src="doc/uc02part2.PNG">
 
 3. UC04 Mengelola data lapangan (18221085 Nalendro N.U.A.R.F)
 
-<img src="doc/uc04part1.png" height="30" >
-<img src="doc/uc04part2.png" height="30" >
+<img src="doc/uc04part1.PNG">
+<img src="doc/uc04part2.PNG">
 
 4. UC05 Reservasi on-site (18221087 Willy Frans Farel Sijabat)
 
-<img src="doc/uc05part1.png" height="30" >
+<img src="doc/uc05part1.PNG">
 
 5. UC06 Mengubah data reservasi lapangan (18221087 Willy Frans Farel Sijabat)
 
-<img src="doc/uc06part1.png" height="30" >
+<img src="doc/uc06part1.PNG">
 
 6. UC07 Melihat laporan data pemasukan dari reservasi lapangan (18221085 Nalendro N.U.A.R.F)
 
-<img src="doc/uc07part1.png" height="30" >
+<img src="doc/uc07part1.PNG">
 
 7. UC08 Memasukkan bukti pembayaran (18221087 Willy Frans Farel Sijabat)
 
-<img src="doc/uc08part1.png" height="30" >
+<img src="doc/uc08part1.PNG">
 
 8. UC09 Login (18221057 Danang Ihsan)
 
-<img src="doc/uc09part1.png" height="30" >
+<img src="doc/uc09part1.PNG">
 
 9. UC10 Registrasi akun (18221057 Danang Ihsan)
 
-<img src="doc/uc10part1.png" height="30" >
+<img src="doc/uc10part1.PNG">
 
 Tampilan Dashboard Customer:
 
-<img src="doc/dashboardcustomer.png" height="30" >
+<img src="doc/dashboardcustomer.PNG">
 
 Tampilan Dashboard Admin:
 
-<img src="doc/dashboardadmin.png" height="30" >
+<img src="doc/dashboardadmin.PNG">
 
 Tampilan Dashboard Owner:
 
-<img src="doc/dashboardowner.png" height="30" >
+<img src="doc/dashboardowner.PNG">
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
