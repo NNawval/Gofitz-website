@@ -116,8 +116,8 @@ _Below is the list of implemented database._
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## Deployment Website Gofitz
+## Deployment
 
-https://gofitzz-willyffs.vercel.app/
+Website Gofitz: https://gofitzz-willyffs.vercel.app/
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
