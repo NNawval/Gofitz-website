@@ -9,7 +9,7 @@ function mouseOut(event) {
     event.target.classList.remove("mouse-over");
 }
 
-function Tanggal(props) {
+function TanggalUbah(props) {
     function setStyle(status) {
         let style = "";
         if (status[0] <= 0) {
@@ -60,8 +60,8 @@ function Tanggal(props) {
 
     }
     return (
-        <button data-testid="Tanggal" onClick={gantiTanggal} onMouseOver={mouseOver} onMouseOut={mouseOut} className={setStyle(props.status)} data-bs-toggle="button">{props.status[0]}</button>
+        <button data-testid="TanggalUbah" onClick={gantiTanggal} onMouseOver={mouseOver} onMouseOut={mouseOut} className={setStyle(props.status)} data-bs-toggle="button">{props.status[0]}</button>
     )
 }
 
-export default Tanggal;
+export default TanggalUbah;

@@ -18,7 +18,7 @@ function toRangeJam(jam) {
 
 function WaktuTersedia(props) {
     return (
-        <div className="col-3 p-0">
+        <div data-testid="WaktuTersedia" className="col-3 p-0">
             <button className={props.isReserved ? "btn btn-danger btn-width disabled p-0" : "btn btn-success disabled btn-width p-0"} type="button">{toRangeJam(props.time)}</button>
         </div>
     );
