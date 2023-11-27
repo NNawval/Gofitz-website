@@ -24,6 +24,7 @@ function ListLapangan() {
         const {data} = await database.supabase
           .from('lapangan')
           .select()
+          .order('nomorLapangan')
           await setLapangan(data)
   
       }
