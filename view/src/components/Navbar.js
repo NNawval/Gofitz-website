@@ -13,7 +13,7 @@ function Navbar() {
   const navigate = useNavigate();
   const [session, setSession] = useState(null);
   const [role, setRole] = useState(null);
-  const [username, setUsername] = useState("null");
+  const [username, setUsername] = useState(null);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -42,7 +42,7 @@ function Navbar() {
       let data = await database.getRole(session.user.user_metadata.username);
       setRole(data[0].role);
     } else {
-      setUsername("");
+      setUsername(null);
       setRole("customer")
     }
   }

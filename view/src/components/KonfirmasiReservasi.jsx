@@ -5,6 +5,8 @@ import { faChevronDown ,faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import DropdownItem from "./DropdownItem";
 import database from "../models/database";
 import { Link } from "react-router-dom";
+import { supabase } from '../models/database';
+import { useEffect, useState } from "react";
 
 function toRupiah(num) {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -20,7 +22,16 @@ function toTime(time) {
 }
 
 function KonfirmasiReservasi(props) {
+    const [session, setSession] = useState(null);
     const [style, setStyle] = React.useState("mt-3 d-none");
+
+    useEffect(() => {
+        supabase.auth.getSession().then(({ data: { session } }) => {
+          setSession(session);
+          // changeRole();
+        })
+    }, [])
+    console.log(session);
 
     function incrementStart() {
         if (props.time.mulai < 20) {
@@ -153,8 +164,8 @@ function KonfirmasiReservasi(props) {
                                 </div>
                             </div>
                         </div>
-                        <p className="ps-1 mb-0 mt-1 text-start text-danger">{props.reservasi === "Pilih lapangan" ? "Pilih lapangan terlebih dahulu!" : (!props.canPesan ? "Lapangan tidak tersedia!" : "")}</p>
-                        {props.canPesan ? 
+                        <p className="ps-1 mb-0 mt-1 text-start text-danger">{!session ?"Login terlebih dahulu!" : (props.reservasi === "Pilih lapangan" ? "Pilih lapangan terlebih dahulu!" : (!props.canPesan ? "Lapangan tidak tersedia!" : ""))}</p>
+                        {props.canPesan && session ? 
                             <Link to={props.kondisi === "online" ? "/reservasi" : (props.kondisi === "onSite" ? "/reservasi-onsite" : "/")} state={props.kondisi !== "ubahReservasi" ? {lapangan:parseInt(props.reservasi.split(" ")[1]), harga:props.harga, totalHarga:props.hargaTotal, durasi:props.jam, scheduleBookingStart: new Date(props.pilihTanggal.getFullYear(), props.pilihTanggal.getMonth(), props.pilihTanggal.getDate(), props.time.mulai), scheduleBookingEnd: new Date(props.pilihTanggal.getFullYear(), props.pilihTanggal.getMonth(), props.pilihTanggal.getDate(), props.time.selesai)} : null}>
                             <button onClick={props.kondisi === "ubahReservasi" ? clickUpdateReservasi : null} className="btn btn-success rounded w-100 align-self-center mt-3 p-2" type="button">
                                 {props.kondisi !== "ubahReservasi" ? "Pesan" : "Ubah"}
@@ -216,7 +227,7 @@ function KonfirmasiReservasi(props) {
                         
                     </div>
                 </div>
-                {props.canPesan ? 
+                {props.canPesan && session ? 
                     <Link to={props.kondisi === "online" ? "/reservasi" : (props.kondisi === "onSite" ? "/reservasi-onsite" : "/")} state={props.kondisi !== "ubahReservasi" ? {lapangan:parseInt(props.reservasi.split(" ")[1]), harga:props.harga, totalHarga:props.hargaTotal, durasi:props.jam, scheduleBookingStart: new Date(props.pilihTanggal.getFullYear(), props.pilihTanggal.getMonth(), props.pilihTanggal.getDate(), props.time.mulai), scheduleBookingEnd: new Date(props.pilihTanggal.getFullYear(), props.pilihTanggal.getMonth(), props.pilihTanggal.getDate(), props.time.selesai)} : null}>
                     <button onClick={props.kondisi === "ubahReservasi" ? clickUpdateReservasi : null} className="col-2 btn btn-success rounded align-self-center mt-3 p-2" type="button">
                         {props.kondisi !== "ubahReservasi" ? "Pesan" : "Ubah"}
