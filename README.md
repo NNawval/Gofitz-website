@@ -78,3 +78,39 @@ _Below is the list of implemented use cases including PIC and screenshot._
 
 ## Database
 _Below is the list of implemented database._
+
+1. Tabel Lapangan
+
+| Atribut | Type | 
+|---------| ---- |
+| id | int |
+| namaLapangan | varchar | 
+| countBola | int |
+| priceLapanganWeekend | int |
+| priceLapanganWeekday | int |
+| imgScr | varchar | 
+| nomorLapangan | int |
+
+2. Tabel Reservasi 
+
+| Atribut | Type |
+| ---- | ---|
+| id | int |
+| namaPemesan | varchar |
+| lapanganId | int |
+| scheduleBookingStart | timestamp |
+| scheduleBookingEnd | timestamp |
+| totalHarga | int |
+| ssPayment | varchar |
+
+3. Tabel User
+
+| Atribut | Type |
+| ---- | ---- |
+| id | string |
+| username | varchar |
+| role | string |
+| created_at | timestamp |
+| email | string |
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
