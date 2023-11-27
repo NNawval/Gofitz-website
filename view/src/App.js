@@ -69,6 +69,7 @@ function App() {
         <Route path="/" element={<Home/>}/>
         <Route path="ketersediaan" element={<Ketersediaan kondisi="online"/>}/>
         <Route path="keuangan" element={<DashboardOwner/>}/>
+        <Route path="reservasi" element={<Reservasi online={true} />}/>
         </> : <> <Route path="/" element={<Home/>}/>
         <Route path="ketersediaan" element={<Ketersediaan kondisi="online"/>}/></>)) }
         <Route path="reservasi" element={<Reservasi online={true} />}/>
