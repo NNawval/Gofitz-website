@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { supabase } from '../models/database';
+import { useNavigate } from "react-router-dom";
 
 function Register() {
+  const navigate = useNavigate();
   
   const [formData,setFormData] = useState({
     username:"",email:"",password:"",
@@ -43,6 +45,7 @@ function Register() {
           )
           if (error) throw error
           alert("Silahkan cek email kamu untuk verifikasi");
+          navigate("/");
           const {data1, error2} = await supabase
           .from("user")
           .update({"username": formData.username})
