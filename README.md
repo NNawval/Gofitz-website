@@ -17,6 +17,7 @@
     </li>
     <li><a href="#use-case">Use Case</a></li>
     <li><a href="#database">Database</a></li>
+    <li><a href="#deployment">Deployment</a></li>
   </ol>
 </details>
 
@@ -112,5 +113,11 @@ _Below is the list of implemented database._
 | role | string |
 | created_at | timestamp |
 | email | string |
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Deployment Website Gofitz
+
+https://gofitzz-willyffs.vercel.app/
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
