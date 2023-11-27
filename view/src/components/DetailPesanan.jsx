@@ -14,7 +14,7 @@ export default  function DetailPesanan(props) {
     }
     return (
         <>
-            <div className="container-fluid container-lg sticky-top pt-4">
+            <div data-testid="DetailPesanan" className="container-fluid container-lg sticky-top pt-4">
                 <div className="border p-4" style={{borderRadius:"15px"}}>
                     <div className="d-flex gap-2">
                             {dataLapangan.map((x)=> 

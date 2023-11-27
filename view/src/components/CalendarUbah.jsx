@@ -47,7 +47,7 @@ function CalendarUbah(props) {
     setTanggal2(tanggal2, (new Date(new Date().getTime() + 24 * 60 * 60 * 1000).getMonth() + 1))
 
     return (
-        <div className="container">
+        <div data-testid="CalendarUbah" className="container">
             <h3 className="text-start mb-4">Pilih tanggal reservasi</h3>
             <div className="row justify-content-center gap-4">
                 <CalendarSatuanUbah month={new Date(new Date().getTime() + 24 * 60 * 60 * 1000).getMonth()} year={new Date(new Date().getTime() + 24 * 60 * 60 * 1000).getFullYear()} tanggal={tanggal1} ubahTanggal={props.ubahTanggal} />

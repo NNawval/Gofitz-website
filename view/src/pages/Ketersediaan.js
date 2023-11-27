@@ -158,7 +158,7 @@ function Ketersediaan(props) {
   }
 
   return (
-    <div>
+    <div data-testid="Ketersediaan" >
       <Navbar />
       <div className="container w-75">
         <div className="row">

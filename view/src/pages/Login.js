@@ -30,14 +30,14 @@ function Login() {
       // console.log(data)
       alert('Login Berhasil')
       // ('#modalLogin').modal('hide');
-      navigate(0);
+      window.location.reload(false);
     } catch (error) {
       alert('Akun tidak tersedia! atau belum verifikasi email!')
     }
   }
 
   return (
-    <div className="modal fade" tabIndex="-1" role="dialog" id="modalLogin">
+    <div  data-testid="Login" className="modal fade" tabIndex="-1" role="dialog" id="modalLogin">
       <div className="modal-dialog" role="document">
         <div className="modal-content rounded-4 shadow">
           <div className="modal-header p-5 pb-4 border-bottom-0">

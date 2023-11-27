@@ -45,11 +45,12 @@ function Register() {
           )
           if (error) throw error
           alert("Silahkan cek email kamu untuk verifikasi");
-          navigate("/");
+          
           const {data1, error2} = await supabase
           .from("user")
           .update({"username": formData.username})
           .eq("email", formData.email);
+          window.location.reload(false);
         } catch (error) {
           alert(error)
         }
@@ -62,7 +63,7 @@ function Register() {
 
   return (
     // modal-sheet fade position-static d-block bg-body-secondary p-4 py-md-5
-    <div className="modal fade" tabIndex="-1" role="dialog" id="modalSignIn">
+    <div  data-testid="Register" className="modal fade" tabIndex="-1" role="dialog" id="modalSignIn">
       <div className="modal-dialog" role="document">
         <div className="modal-content rounded-4 shadow">
           <div className="modal-header p-5 pb-4 border-bottom-0">

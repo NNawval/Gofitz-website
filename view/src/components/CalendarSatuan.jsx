@@ -3,7 +3,7 @@ import Tanggal from "./Tanggal";
 
 function CalendarSatuan(props) {
     return (
-        <div className="w-calendar col-6">
+        <div data-testid="CalenderSatuan" className="w-calendar col-6">
             <p className="text-center text-bg-success rounded-pill">
                 <b>{new Date(props.year, props.month).toLocaleDateString('id', {year: 'numeric',month: 'long'})}</b>
             </p>

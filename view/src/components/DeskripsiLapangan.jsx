@@ -19,7 +19,7 @@ function DeskripsiLapangan(props) {
     }
     
     return (
-        <div className="row mb-0">
+        <div data-testid="DeskripsiLapangan" className="row mb-0">
             <div className="col-md-12">
                 <div className="row g-0 border rounded overflow-hidden flex-md-row shadow-sm h-md-250 position-relative">
                     <div className="col-auto d-none d-xl-block">

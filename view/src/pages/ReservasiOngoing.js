@@ -143,7 +143,7 @@ function ReservasiOngoing(){
     return(
         <>
             <Navbar />
-            <div className="container w-75" style={{minHeight:"78vh"}}>
+            <div  data-testid="ReservasiOngoing" className="container w-75" style={{minHeight:"78vh"}}>
                 <div className="container shadow border rounded my-3 px-3 pt-3 pb-2">
                     <div className="container mb-3">
                         <div className="row justify-content-between">

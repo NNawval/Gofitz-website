@@ -9,7 +9,7 @@ function ListReservasi(props){
     let b = a.toLocaleDateString('id', {weekday: 'long',year: 'numeric',month: 'long',day: 'numeric'});
     let d = a.toTimeString().split(" ")[0]+"-"+c.toTimeString().split(" ")[0];
     return(
-        <div className="text-start container mb-3">
+        <div data-testid="ListReservasi" className="text-start container mb-3">
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center gap-2">
                     <div className="d-flex align-items-center gap-2">

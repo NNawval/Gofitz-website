@@ -15,7 +15,7 @@ import WaktuTersedia from "./WaktuTersedia";
 
 function PilihWaktu(props) {
     return (
-        <div className="row m-0 collapse" id={"deskripsi-" + props.lapangan}>
+        <div data-testid="PilihWaktu" className="row m-0 collapse" id={"deskripsi-" + props.lapangan}>
             <div className = "col-xl-8 col-12 offset-xl-4 border rounded overflow-hidden shadow-sm py-3">
                 <div className="container text-center">
                     <div className="row g-3">

@@ -102,6 +102,7 @@ function FormReserve(props){
             return (
                 <div className="col-12">
                 <Form.Group className="mb-3" style={{maxWidth: "500px"}}>
+                    <p><b>Masukkan Bukti Pembayaran</b></p>
                     <Form.Control type="file" accept="image/png, image/jpeg" onChange={handleChange2}/>
                 </Form.Group>
                 {selectedFile && (
@@ -125,7 +126,7 @@ function FormReserve(props){
     let d = reservasi.scheduleBookingStart.toTimeString().split(" ")[0]+"-"+reservasi.scheduleBookingEnd.toTimeString().split(" ")[0];
 
     return(
-        <div className="container-fluid px-5 px-lg-2 mt-4 mx-0 text-start">
+        <div data-testid="FormReserve" className="container-fluid px-5 px-lg-2 mt-4 mx-0 text-start">
             <hr className="d-none d-lg-block" />
             <h4 className="mb-3">Pesananmu</h4>
             <div className="d-flex justify-content-between">

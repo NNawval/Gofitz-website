@@ -3,7 +3,7 @@ import React from "react";
 function CardPlaceholder() {
     return (
         <>
-            <div className="container-fluid p-0">
+            <div data-testid="CardPlaceholder" className="container-fluid p-0">
                 <div className="row mb-0">
                     <div className="col-md-12">
                         <div className="row g-0 border rounded overflow-hidden flex-md-row shadow-sm h-md-250 position-relative">

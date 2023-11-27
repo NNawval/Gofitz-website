@@ -3,7 +3,7 @@ import TanggalUbah from "./TanggalUbah";
 
 function CalendarSatuanUbah(props) {
     return (
-        <div className="w-calendar col-6">
+        <div data-testid="CalendarSatuanUbah" className="w-calendar col-6">
             <p className="text-bg-success rounded-pill">
                 <b>{new Date(props.year, props.month).toLocaleDateString('id', {year: 'numeric',month: 'long'})}</b>
             </p>

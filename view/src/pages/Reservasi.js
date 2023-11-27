@@ -11,7 +11,7 @@ function Reservasi(props) {
 
   return (
     <>
-        <header className="d-lg-block d-none py-3 border-bottom text-start" style={{height:"10vh"}}>
+        <header  data-testid="Reservasi" className="d-lg-block d-none py-3 border-bottom text-start" style={{height:"10vh"}}>
             <Link to="/" className="ms-5 link-body-emphasis text-decoration-none">
                 <span className="badge bg-success fs-5">GOFITZ</span>
             </Link>

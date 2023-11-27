@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createClient } from "@supabase/supabase-js";
 import Navbar from "../components/Navbar";
-import { Container, Form, Button, Row, Col, Image } from 'react-bootstrap';
+import {  Form,  Image } from 'react-bootstrap';
 import Footer from "./Footer";
 const supabaseUrl = "https://rrdwyabynnlseyxhwqqx.supabase.co"
 
@@ -152,7 +151,7 @@ const AddLapangan = () => {
                 className="form-control"
                 name='bola'
                 onChange={handleChange}
-                placeholder="Jumlah bola"
+                placeholder="Jumlah Bola"
               />
             </div>
           </div>
@@ -188,7 +187,7 @@ const AddLapangan = () => {
                 className="form-control"
                 name="weekday"
                 onChange={handleChange}
-                placeholder="Jumlah bola"
+                placeholder="Harga Weekday"
               />
             </div>
           </div>

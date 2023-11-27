@@ -73,8 +73,8 @@ function ListLapangan() {
 
           } else {
             console.log('Tidak ada data dengan timestamp di antara hari ini dan 30 hari ke depan.');
-            deleteLapangan(id);
-            navigate("/list-lapangan");
+            await deleteLapangan(id);
+            window.location.reload(false);
           }
         } catch (error) {
           console.error('Error:', error.message);

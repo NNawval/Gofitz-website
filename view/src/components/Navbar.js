@@ -56,7 +56,7 @@ function Navbar() {
 
   // console.log(supabase.auth.getSession())
   return (
-    <header className="px-5 d-flex flex-wrap align-items-center justify-content-between border-bottom" style={{height:"10vh"}}>
+    <header data-testid="Navbar" className="px-5 d-flex flex-wrap align-items-center justify-content-between border-bottom" style={{height:"10vh"}}>
       <div className="w-25 mb-0">
         <Link to="/" className="d-inline-flex link-body-emphasis text-decoration-none">
           <span className="badge bg-success fs-5">GOFITZ</span>

@@ -60,7 +60,7 @@ function TanggalUbah(props) {
 
     }
     return (
-        <button onClick={gantiTanggal} onMouseOver={mouseOver} onMouseOut={mouseOut} className={setStyle(props.status)} data-bs-toggle="button">{props.status[0]}</button>
+        <button data-testid="TanggalUbah" onClick={gantiTanggal} onMouseOver={mouseOver} onMouseOut={mouseOut} className={setStyle(props.status)} data-bs-toggle="button">{props.status[0]}</button>
     )
 }
 
